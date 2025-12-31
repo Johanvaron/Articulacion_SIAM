@@ -1,7 +1,78 @@
 /**
  * Sistema de Matrículas - Articulación SENA
- * JavaScript principal
+ * JavaScript principal - Mobile-First
  */
+
+// ============================================
+// MOBILE NAVIGATION
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle móvil navbar
+    const navbarToggle = document.getElementById('navbarToggle');
+    const navbarMenu = document.getElementById('navbarMenu');
+    const body = document.body;
+    
+    // Crear overlay para el menú móvil
+    const overlay = document.createElement('div');
+    overlay.className = 'mobile-menu-overlay';
+    overlay.id = 'mobileMenuOverlay';
+    body.appendChild(overlay);
+    
+    if (navbarToggle && navbarMenu) {
+        // Toggle menú
+        navbarToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navbarMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            body.classList.toggle('menu-open');
+            
+            const icon = this.querySelector('i');
+            if (navbarMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Cerrar menú al hacer click en un enlace
+        const menuLinks = navbarMenu.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navbarMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                body.classList.remove('menu-open');
+                const icon = navbarToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+        
+        // Cerrar menú al hacer click en el overlay
+        overlay.addEventListener('click', function() {
+            navbarMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            const icon = navbarToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        });
+        
+        // Cerrar menú con la tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navbarMenu.classList.contains('active')) {
+                navbarMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                body.classList.remove('menu-open');
+                const icon = navbarToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+});
 
 // ============================================
 // UTILIDADES GENERALES
@@ -13,14 +84,15 @@
 function showAlert(message, type = 'info') {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type}`;
-    alertDiv.textContent = message;
+    alertDiv.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
 
     const container = document.querySelector('.container');
     if (container) {
         container.insertBefore(alertDiv, container.firstChild);
 
         setTimeout(() => {
-            alertDiv.remove();
+            alertDiv.style.opacity = '0';
+            setTimeout(() => alertDiv.remove(), 300);
         }, 5000);
     }
 }

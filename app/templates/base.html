@@ -30,26 +30,30 @@
                 SIAM
             </a>
 
-            <ul class="navbar-menu">
+            <button class="navbar-toggle" id="navbarToggle" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="navbar-menu" id="navbarMenu">
                 {% if current_user.is_authenticated %}
                     {% if current_user.is_admin() %}
-                        <li><a href="{{ url_for('admin.dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li><a href="{{ url_for('admin.usuarios') }}"><i class="fas fa-users"></i> Usuarios</a></li>
-                        <li><a href="{{ url_for('admin.matriculas') }}"><i class="fas fa-clipboard-list"></i> Matrículas</a></li>
+                        <li><a href="{{ url_for('admin.dashboard') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                        <li><a href="{{ url_for('admin.usuarios') }}"><i class="fas fa-users"></i> <span>Usuarios</span></a></li>
+                        <li><a href="{{ url_for('admin.matriculas') }}"><i class="fas fa-clipboard-list"></i> <span>Matrículas</span></a></li>
                     {% elif current_user.is_docente() %}
-                        <li><a href="{{ url_for('docente.dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li><a href="{{ url_for('docente.matriculas') }}"><i class="fas fa-clipboard-list"></i> Matrículas</a></li>
+                        <li><a href="{{ url_for('docente.dashboard') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                        <li><a href="{{ url_for('docente.matriculas') }}"><i class="fas fa-clipboard-list"></i> <span>Matrículas</span></a></li>
                     {% elif current_user.is_aprendiz() %}
-                        <li><a href="{{ url_for('aprendiz.dashboard') }}"><i class="fas fa-tachometer-alt"></i> Mi Dashboard</a></li>
-                        <li><a href="{{ url_for('aprendiz.matricula') }}"><i class="fas fa-edit"></i> Matrícula</a></li>
-                        <li><a href="{{ url_for('aprendiz.documentos') }}"><i class="fas fa-file-upload"></i> Documentos</a></li>
+                        <li><a href="{{ url_for('aprendiz.dashboard') }}"><i class="fas fa-tachometer-alt"></i> <span>Mi Dashboard</span></a></li>
+                        <li><a href="{{ url_for('aprendiz.matricula') }}"><i class="fas fa-edit"></i> <span>Matrícula</span></a></li>
+                        <li><a href="{{ url_for('aprendiz.documentos') }}"><i class="fas fa-file-upload"></i> <span>Documentos</span></a></li>
                     {% endif %}
-                    <li><a href="{{ url_for('public.logout') }}" onclick="event.preventDefault(); showSpinner2('Cerrando sesión...'); setTimeout(() => window.location.href='{{ url_for('public.logout') }}', 300);"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+                    <li><a href="{{ url_for('public.logout') }}" onclick="event.preventDefault(); showSpinner2('Cerrando sesión...'); setTimeout(() => window.location.href='{{ url_for('public.logout') }}', 300);"><i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>
                 {% else %}
-                    <li><a href="{{ url_for('public.index') }}"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li><a href="{{ url_for('public.programas') }}"><i class="fas fa-book"></i> Programas</a></li>
-                    <li><a href="{{ url_for('public.contacto') }}"><i class="fas fa-envelope"></i> Contacto</a></li>
-                    <li><a href="{{ url_for('public.login') }}"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
+                    <li><a href="{{ url_for('public.index') }}"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="{{ url_for('public.programas') }}"><i class="fas fa-book"></i> <span>Programas</span></a></li>
+                    <li><a href="{{ url_for('public.contacto') }}"><i class="fas fa-envelope"></i> <span>Contacto</span></a></li>
+                    <li><a href="{{ url_for('public.login') }}"><i class="fas fa-sign-in-alt"></i> <span>Iniciar Sesión</span></a></li>
                     <li><a href="{{ url_for('public.registro') }}" class="btn btn-primary">Registrarse</a></li>
                 {% endif %}
             </ul>
