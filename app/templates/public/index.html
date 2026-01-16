@@ -3,7 +3,6 @@
 {% block title %}SIAM - Sistema Integrado de Articulación y Media Técnica SENA{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 {% endblock %}
 
@@ -13,18 +12,17 @@
     <div class="hero-content">
         <div class="hero-text">
             <span class="hero-badge">
-                <i class="fas fa-graduation-cap"></i> SENA - Formación de Calidad
+                <i class="fas fa-graduation-cap"></i> SENA CGMLTI
             </span>
             <h1 class="hero-title">
                 Sistema <span class="hero-title-highlight">SIAM</span>
             </h1>
             <h2 class="hero-subtitle">
-                Centro de Gestión de Mercados, Logística y Tecnologías de la Información
+                Articulación con la Media Técnica
             </h2>
             <p class="hero-description">
-                Plataforma integral para la gestión de articulación con la media técnica.
-                Simplifica el proceso de matrícula, seguimiento académico y generación de documentos
-                para estudiantes, docentes y administrativos.
+                Plataforma integral para la gestión de matrícula, documentos y seguimiento académico.
+                Conectando estudiantes con su futuro profesional.
             </p>
             <div class="hero-actions">
                 <a href="{{ url_for('public.login') }}" class="btn-hero btn-primary">
@@ -46,7 +44,7 @@
     </div>
 </section>
 
-<!-- Estadísticas Section -->
+<!-- Estadísticas compactas -->
 <section class="stats-cards-section">
     <div class="container">
         <div class="stats-cards-grid">
@@ -55,8 +53,8 @@
                     <i class="fas fa-book"></i>
                 </div>
                 <div class="stat-card-content">
-                    <h3 class="stat-card-number">{{ estadisticas.programas }}</h3>
-                    <p class="stat-card-label">Programas Técnicos</p>
+                    <h3 class="stat-card-number">{{ estadisticas.programas or '6' }}</h3>
+                    <p class="stat-card-label">Programas</p>
                 </div>
             </div>
 
@@ -65,8 +63,8 @@
                     <i class="fas fa-user-graduate"></i>
                 </div>
                 <div class="stat-card-content">
-                    <h3 class="stat-card-number">{{ estadisticas.estudiantes }}</h3>
-                    <p class="stat-card-label">Estudiantes Activos</p>
+                    <h3 class="stat-card-number">{{ estadisticas.estudiantes or '500+' }}</h3>
+                    <p class="stat-card-label">Estudiantes</p>
                 </div>
             </div>
 
@@ -75,48 +73,30 @@
                     <i class="fas fa-school"></i>
                 </div>
                 <div class="stat-card-content">
-                    <h3 class="stat-card-number">{{ estadisticas.colegios }}</h3>
-                    <p class="stat-card-label">Instituciones Aliadas</p>
+                    <h3 class="stat-card-number">{{ estadisticas.colegios or '10+' }}</h3>
+                    <p class="stat-card-label">Instituciones</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Features Section -->
+<!-- Features Section - Solo 3 características principales -->
 <section class="features-section">
     <div class="container">
         <div class="section-header">
-            <span class="section-badge">¿Por qué SIAM?</span>
-            <h2 class="section-title">
-                Gestión Integral de Articulación
-            </h2>
-            <p class="section-description">
-                Una plataforma completa diseñada para simplificar todos los procesos
-                de articulación entre instituciones educativas y el SENA.
-            </p>
+            <span class="section-badge">Beneficios</span>
+            <h2 class="section-title">¿Por qué usar SIAM?</h2>
         </div>
 
-        <div class="features-grid">
+        <div class="features-grid-compact">
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-file-alt"></i>
                 </div>
-                <h3 class="feature-title">Gestión de Documentos</h3>
+                <h3 class="feature-title">Gestión Digital</h3>
                 <p class="feature-description">
-                    Carga, almacena y descarga documentos de forma segura.
-                    Generación automática de formatos requeridos por el SENA.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3 class="feature-title">Multi-Rol</h3>
-                <p class="feature-description">
-                    Interfaces personalizadas para administradores, docentes,
-                    rectores y aprendices con permisos específicos.
+                    Carga y gestiona todos tus documentos en un solo lugar de forma segura.
                 </p>
             </div>
 
@@ -124,32 +104,9 @@
                 <div class="feature-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
-                <h3 class="feature-title">Reportes y Estadísticas</h3>
+                <h3 class="feature-title">Seguimiento</h3>
                 <p class="feature-description">
-                    Visualiza el progreso académico con dashboards intuitivos
-                    y exporta reportes en múltiples formatos.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-file-excel"></i>
-                </div>
-                <h3 class="feature-title">Exportación SOFIA Plus</h3>
-                <p class="feature-description">
-                    Genera automáticamente archivos Excel compatibles con SOFIA Plus
-                    con toda la información de los aprendices.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3 class="feature-title">Seguridad</h3>
-                <p class="feature-description">
-                    Encriptación de datos sensibles, autenticación robusta
-                    y control de acceso por roles.
+                    Monitorea tu progreso académico en tiempo real con dashboards intuitivos.
                 </p>
             </div>
 
@@ -157,94 +114,54 @@
                 <div class="feature-icon">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
-                <h3 class="feature-title">Responsive</h3>
+                <h3 class="feature-title">Acceso Móvil</h3>
                 <p class="feature-description">
-                    Accede desde cualquier dispositivo: computador, tablet o móvil.
-                    Diseño adaptativo y optimizado.
+                    Accede desde cualquier dispositivo, en cualquier momento y lugar.
                 </p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Programas Section -->
+<!-- Programas Section - Versión compacta -->
 <section class="programas-section">
     <div class="container">
         <div class="section-header">
-            <span class="section-badge">Formación Técnica</span>
-            <h2 class="section-title">
-                Programas Disponibles
-            </h2>
+            <span class="section-badge">Formación</span>
+            <h2 class="section-title">Programas Disponibles</h2>
             <p class="section-description">
-                Explora los programas de formación técnica disponibles en articulación
-                con el SENA. Formación de calidad para tu futuro profesional.
+                Descubre los programas técnicos en articulación con el SENA
             </p>
         </div>
 
-        <div class="programas-grid">
-            {% if programas %}
-                {% for programa in programas %}
-                <div class="programa-card">
-                    <div class="programa-watermark">
-                        <img src="{{ url_for('static', filename='img/sena.png') }}" alt="SENA" class="programa-watermark-logo">
-                        <span class="programa-watermark-text">Centro de Gestión de Mercados, Logística y TI</span>
-                    </div>
-                    <div class="programa-header">
-                        <div class="programa-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h3 class="programa-title">{{ programa.nombre }}</h3>
-                    </div>
-                    <div class="programa-body">
-                        <p class="programa-description">
-                            {{ programa.descripcion or 'Programa de formación técnica en articulación con el SENA.' }}
-                        </p>
-                        {% if programa.duracion_horas %}
-                        <div class="programa-info">
-                            <i class="fas fa-clock"></i>
-                            <span>{{ programa.duracion_horas }} horas de formación</span>
-                        </div>
-                        {% endif %}
-                    </div>
-                    <div class="programa-footer">
-                        <a href="{{ url_for('public.programas') }}" class="btn-programa">
-                            <span>Ver más información</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
+        {% if programas and programas|length > 0 %}
+        <div class="programas-grid-compact">
+            {% for programa in programas[:3] %}
+            <div class="programa-card-compact">
+                <div class="programa-icon">
+                    <i class="fas fa-graduation-cap"></i>
                 </div>
-                {% endfor %}
-            {% else %}
-                <div class="no-programas">
-                    <i class="fas fa-info-circle"></i>
-                    <p>Próximamente publicaremos los programas disponibles.</p>
-                </div>
-            {% endif %}
+                <h3 class="programa-title">{{ programa.nombre }}</h3>
+                {% if programa.duracion_horas %}
+                <p class="programa-duration">
+                    <i class="fas fa-clock"></i> {{ programa.duracion_horas }}h
+                </p>
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
-    </div>
-</section>
-
-<!-- Stats Section -->
-<section class="stats-section">
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <span class="stat-value">{{ stats.colegios if stats else '10+' }}</span>
-                <span class="stat-title">Instituciones Articuladas</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">{{ stats.programas if stats else '15+' }}</span>
-                <span class="stat-title">Programas Técnicos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">{{ stats.estudiantes if stats else '500+' }}</span>
-                <span class="stat-title">Aprendices Activos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">{{ stats.docentes if stats else '50+' }}</span>
-                <span class="stat-title">Instructores</span>
-            </div>
+        <div class="programas-ver-mas">
+            <a href="{{ url_for('public.programas') }}" class="btn-hero btn-ver-programas">
+                Ver todos los programas
+                <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
+        {% else %}
+        <div class="no-programas">
+            <i class="fas fa-info-circle"></i>
+            <p>Próximamente publicaremos los programas disponibles.</p>
+        </div>
+        {% endif %}
     </div>
 </section>
 
@@ -253,10 +170,9 @@
     <div class="container">
         <div class="cta-container">
             <div class="cta-content">
-                <h2 class="cta-title">¿Listo para comenzar tu formación?</h2>
+                <h2 class="cta-title">¿Listo para comenzar?</h2>
                 <p class="cta-description">
-                    Únete a cientos de estudiantes que ya están construyendo su futuro
-                    con la formación técnica del SENA.
+                    Únete a cientos de estudiantes que están construyendo su futuro con el SENA
                 </p>
                 <div class="cta-actions">
                     <a href="{{ url_for('public.registro') }}" class="btn-hero btn-primary">
@@ -266,92 +182,6 @@
                     <a href="{{ url_for('public.contacto') }}" class="btn-hero btn-outline">
                         <i class="fas fa-envelope"></i>
                         Contactar
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Ubicación Section -->
-<section class="ubicacion-section">
-    <div class="container">
-        <div class="section-header">
-            <span class="section-badge">Ubicación</span>
-            <h2 class="section-title">
-                ¿Dónde Estamos Ubicados?
-            </h2>
-            <p class="section-description">
-                Visítanos en cualquiera de nuestras dos sedes del Centro de Gestión de Mercados,
-                Logística y Tecnologías de la Información en Bogotá.
-            </p>
-        </div>
-
-        <div class="ubicacion-grid">
-            <!-- Sede Chapinero -->
-            <div class="ubicacion-card">
-                <div class="ubicacion-card-header">
-                    <div class="ubicacion-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3 class="ubicacion-title">Sede Chapinero</h3>
-                </div>
-                <div class="ubicacion-card-body">
-                    <p class="ubicacion-address">
-                        <i class="fas fa-location-dot"></i>
-                        Calle 52 No. 13-65, Bogotá
-                    </p>
-                    <p class="ubicacion-barrio">Barrio: Chapinero</p>
-                    <div class="ubicacion-map">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.6315882965944!2d-74.06588492404744!3d4.651516241820352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a2e6e2e6e2f%3A0x8e3f9a2e6e2e6e2f!2sSENA%20CGMLTI%20Chapinero!5e0!3m2!1ses!2sco!4v1234567890123!5m2!1ses!2sco"
-                            width="100%"
-                            height="300"
-                            style="border:0; border-radius: 12px;"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
-                </div>
-                <div class="ubicacion-card-footer">
-                    <a href="https://www.google.com/maps/dir//Calle+52+No.+13-65,+Bogotá" target="_blank" class="btn-ubicacion">
-                        <i class="fas fa-directions"></i>
-                        Cómo llegar
-                    </a>
-                </div>
-            </div>
-
-            <!-- Sede Fontibón -->
-            <div class="ubicacion-card">
-                <div class="ubicacion-card-header">
-                    <div class="ubicacion-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3 class="ubicacion-title">Sede Fontibón</h3>
-                </div>
-                <div class="ubicacion-card-body">
-                    <p class="ubicacion-address">
-                        <i class="fas fa-location-dot"></i>
-                        Calle 22C No. 98A-55, Bogotá
-                    </p>
-                    <p class="ubicacion-barrio">Barrio: Fontibón</p>
-                    <div class="ubicacion-map">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.9367615428674!2d-74.15015742404819!3d4.6850642416976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9b2e6e2e6e2f%3A0x8e3f9b2e6e2e6e2f!2sSENA%20CGMLTI%20Fontibón!5e0!3m2!1ses!2sco!4v1234567890123!5m2!1ses!2sco"
-                            width="100%"
-                            height="300"
-                            style="border:0; border-radius: 12px;"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
-                </div>
-                <div class="ubicacion-card-footer">
-                    <a href="https://www.google.com/maps/dir//Calle+22C+No.+98A-55,+Bogotá" target="_blank" class="btn-ubicacion">
-                        <i class="fas fa-directions"></i>
-                        Cómo llegar
                     </a>
                 </div>
             </div>
