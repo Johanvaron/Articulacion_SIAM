@@ -2,78 +2,94 @@
 
 {% block title %}Programas - SIAM{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/programas.css') }}">
-{% endblock %}
-
 {% block content %}
-<div class="programas-modern-container">
-    <div class="programas-header">
-        <h1 class="programas-title">
-            <i class="fas fa-graduation-cap"></i> Programas de Formación
-        </h1>
-        <p class="programas-subtitle">
-            Conoce los programas de articulación con la media técnica que ofrecemos
-        </p>
-    </div>
-
-    {% if programas %}
-    <div class="programas-grid">
-        {% for programa in programas %}
-        <div class="programa-card-modern">
-            <div class="programa-watermark">
-                <img src="{{ url_for('static', filename='img/sena.png') }}" alt="SENA" class="programa-watermark-logo">
-                <span class="programa-watermark-text">Centro de Gestión de Mercados, Logística y TI</span>
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center space-x-2 bg-sena-green/10 text-sena-green px-4 py-2 rounded-full mb-4">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="font-semibold">Formación Técnica</span>
             </div>
-            <div class="programa-card-header">
-                <div class="programa-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <h3 class="programa-nombre">{{ programa.nombre }}</h3>
-            </div>
-
-            <div class="programa-card-body">
-                <div class="programa-info-item">
-                    <div class="programa-info-icon">
-                        <i class="fas fa-barcode"></i>
-                    </div>
-                    <div class="programa-info-content">
-                        <div class="programa-info-label">Código</div>
-                        <div class="programa-info-value">{{ programa.codigo }}</div>
-                    </div>
-                </div>
-
-                <div class="programa-info-item">
-                    <div class="programa-info-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="programa-info-content">
-                        <div class="programa-info-label">Duración</div>
-                        <div class="programa-info-value">{{ programa.duracion_horas }} horas</div>
-                    </div>
-                </div>
-
-                <div class="programa-descripcion">
-                    <h4>Descripción</h4>
-                    <p>{{ programa.descripcion }}</p>
-                </div>
-
-                <a href="{{ url_for('public.programa_detalle', programa_id=programa.id) }}"
-                   class="btn-ver-detalles">
-                    <span>Ver Detalles</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
+            <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                Programas de Formación
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Conoce los programas de articulación con la media técnica que ofrecemos en el SENA
+            </p>
         </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="programas-empty">
-        <div class="programas-empty-icon">
-            <i class="fas fa-book-open"></i>
+
+        {% if programas %}
+        <!-- Grid de Programas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for programa in programas %}
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group">
+                <!-- Logo SENA Watermark -->
+                <div class="relative bg-gradient-to-br from-sena-green to-sena-green-dark p-8 overflow-hidden">
+                    <div class="absolute top-4 right-4 opacity-10">
+                        <img src="{{ url_for('static', filename='img/sena.png') }}" alt="SENA" class="w-24 h-24">
+                    </div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-code text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">{{ programa.nombre }}</h3>
+                        <p class="text-white/80 text-sm">Centro de Gestión de Mercados, Logística y TI</p>
+                    </div>
+                </div>
+
+                <!-- Contenido del Card -->
+                <div class="p-6 space-y-4">
+                    <!-- Código -->
+                    <div class="flex items-center space-x-3 pb-3 border-b border-gray-200">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-barcode text-blue-600"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-500">Código</div>
+                            <div class="font-semibold text-gray-900">{{ programa.codigo }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Duración -->
+                    <div class="flex items-center space-x-3 pb-3 border-b border-gray-200">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clock text-green-600"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-500">Duración</div>
+                            <div class="font-semibold text-gray-900">{{ programa.duracion_horas }} horas</div>
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    {% if programa.descripcion %}
+                    <div class="pt-2">
+                        <h4 class="text-sm font-semibold text-gray-900 mb-2">Descripción</h4>
+                        <p class="text-gray-600 text-sm line-clamp-3">{{ programa.descripcion }}</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- Botón Ver Detalles -->
+                    <a href="{{ url_for('public.programa_detalle', programa_id=programa.id) }}"
+                       class="mt-4 w-full inline-flex items-center justify-center space-x-2 bg-sena-green text-white px-6 py-3 rounded-xl hover:bg-sena-green-dark transition-all duration-300 font-semibold group-hover:shadow-lg">
+                        <span>Ver Detalles</span>
+                        <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        <p class="programas-empty-text">No hay programas disponibles en este momento.</p>
+        {% else %}
+        <!-- Estado Vacío -->
+        <div class="text-center py-16">
+            <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-book-open text-gray-400 text-4xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">No hay programas disponibles</h3>
+            <p class="text-gray-600">Los programas se publicarán próximamente</p>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
 </div>
 {% endblock %}

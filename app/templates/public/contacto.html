@@ -2,137 +2,146 @@
 
 {% block title %}Contacto - SIAM{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/contacto.css') }}">
-{% endblock %}
-
 {% block content %}
-<div class="contacto-modern-container">
-    <!-- Left Side - Branding & Info -->
-    <div class="contacto-left-side">
-        <div class="contacto-branding">
-            <div class="contacto-logo-siam">
-                <img src="{{ url_for('static', filename='img/siam.png') }}" alt="Logo SIAM">
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Left Side - Info & Branding -->
+            <div class="bg-gradient-to-br from-sena-green via-sena-green-dark to-sena-green-darker rounded-3xl p-8 lg:p-12 text-white relative overflow-hidden">
+                <!-- Decorative Background -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+                </div>
+                
+                <!-- Content -->
+                <div class="relative z-10 space-y-8">
+                    <!-- Logo y Título -->
+                    <div class="text-center lg:text-left">
+                        <div class="w-32 h-32 bg-white/20 backdrop-blur-md rounded-3xl p-4 mx-auto lg:mx-0 mb-6 inline-flex items-center justify-center">
+                            <img src="{{ url_for('static', filename='img/siam.png') }}" alt="Logo SIAM" class="w-full h-full object-contain">
+                        </div>
+                        <h1 class="text-4xl font-bold mb-2">SIAM</h1>
+                        <p class="text-xl text-white/90">Sistema Integrado de Articulación</p>
+                        <p class="text-lg text-white/80">y Media Técnica</p>
+                    </div>
+
+                    <!-- Información de Contacto -->
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4 p-4 bg-white/10 backdrop-blur-md rounded-2xl hover:bg-white/20 transition-all">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">Ubicación</h4>
+                                <p class="text-white/90 text-sm">SENA CGMLTI - Centro de Gestión de Mercados, Logística y Tecnologías de la Información</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 bg-white/10 backdrop-blur-md rounded-2xl hover:bg-white/20 transition-all">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-phone text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">Teléfono</h4>
+                                <p class="text-white/90 text-sm">Línea gratuita nacional 018000 910682</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 bg-white/10 backdrop-blur-md rounded-2xl hover:bg-white/20 transition-all">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-envelope text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">Correo Electrónico</h4>
+                                <p class="text-white/90 text-sm">articulacion@sena.edu.co</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h1 class="contacto-brand-title">SIAM</h1>
-            <p class="contacto-brand-subtitle">Sistema Integrado de Articulación y Media Técnica</p>
-        </div>
 
-        <div class="contacto-info">
-            <div class="contacto-info-item">
-                <div class="contacto-info-icon">
-                    <i class="fas fa-map-marker-alt"></i>
+            <!-- Right Side - Contact Form -->
+            <div class="bg-white rounded-3xl shadow-2xl p-8 lg:p-12">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Contáctenos</h2>
+                    <p class="text-gray-600">Si tiene alguna pregunta o necesita asistencia, complete el formulario</p>
                 </div>
-                <div class="contacto-info-text">
-                    <h4>Ubicación</h4>
-                    <p>SENA CGMLTI - Centro de Gestión de Mercados, Logística y Tecnologías de la Información</p>
-                </div>
-            </div>
 
-            <div class="contacto-info-item">
-                <div class="contacto-info-icon">
-                    <i class="fas fa-phone"></i>
-                </div>
-                <div class="contacto-info-text">
-                    <h4>Teléfono</h4>
-                    <p>Línea gratuita nacional 018000 910682</p>
-                </div>
-            </div>
-
-            <div class="contacto-info-item">
-                <div class="contacto-info-icon">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="contacto-info-text">
-                    <h4>Correo Electrónico</h4>
-                    <p>articulacion@sena.edu.co</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="contacto-decoration">
-            <div class="decoration-circle decoration-1"></div>
-            <div class="decoration-circle decoration-2"></div>
-            <div class="decoration-circle decoration-3"></div>
-        </div>
-    </div>
-
-    <!-- Right Side - Contact Form -->
-    <div class="contacto-right-side">
-        <div class="contacto-form-container">
-            <div class="contacto-form-header">
-                <h2 class="contacto-form-title">Contáctenos</h2>
-                <p class="contacto-form-subtitle">Si tiene alguna pregunta o necesita asistencia, complete el formulario</p>
-            </div>
-
-            <form method="POST" action="{{ url_for('public.contacto') }}" class="contacto-form" onsubmit="showSpinner('Enviando mensaje...')">
-                <div class="form-row-contacto">
-                    <div class="form-group-contacto">
-                        <label for="nombre" class="form-label-contacto">
-                            <i class="fas fa-user"></i> Nombre Completo
+                <form method="POST" action="{{ url_for('public.contacto') }}" class="space-y-6" onsubmit="showSpinner('Enviando mensaje...')">
+                    <!-- Nombre Completo -->
+                    <div>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-user text-sena-green mr-2"></i>Nombre Completo
                         </label>
                         <input type="text"
                                id="nombre"
                                name="nombre"
-                               class="form-input-contacto"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-transparent transition-all duration-200 outline-none"
                                placeholder="Tu nombre completo"
                                required>
                     </div>
 
-                    <div class="form-group-contacto">
-                        <label for="email" class="form-label-contacto">
-                            <i class="fas fa-envelope"></i> Correo Electrónico
+                    <!-- Correo Electrónico -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-envelope text-sena-green mr-2"></i>Correo Electrónico
                         </label>
                         <input type="email"
                                id="email"
                                name="email"
-                               class="form-input-contacto"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-transparent transition-all duration-200 outline-none"
                                placeholder="correo@ejemplo.com"
                                required>
                     </div>
-                </div>
 
-                <div class="form-row-contacto">
-                    <div class="form-group-contacto">
-                        <label for="telefono" class="form-label-contacto">
-                            <i class="fas fa-phone"></i> Teléfono
-                        </label>
-                        <input type="tel"
-                               id="telefono"
-                               name="telefono"
-                               class="form-input-contacto"
-                               placeholder="3001234567">
+                    <!-- Teléfono y Asunto -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="telefono" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-phone text-sena-green mr-2"></i>Teléfono
+                            </label>
+                            <input type="tel"
+                                   id="telefono"
+                                   name="telefono"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-transparent transition-all duration-200 outline-none"
+                                   placeholder="3001234567">
+                        </div>
+
+                        <div>
+                            <label for="asunto" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-tag text-sena-green mr-2"></i>Asunto
+                            </label>
+                            <input type="text"
+                                   id="asunto"
+                                   name="asunto"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-transparent transition-all duration-200 outline-none"
+                                   placeholder="¿Sobre qué nos escribes?"
+                                   required>
+                        </div>
                     </div>
 
-                    <div class="form-group-contacto">
-                        <label for="asunto" class="form-label-contacto">
-                            <i class="fas fa-tag"></i> Asunto
+                    <!-- Mensaje -->
+                    <div>
+                        <label for="mensaje" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-comment-alt text-sena-green mr-2"></i>Mensaje
                         </label>
-                        <input type="text"
-                               id="asunto"
-                               name="asunto"
-                               class="form-input-contacto"
-                               placeholder="¿Sobre qué nos escribes?"
-                               required>
+                        <textarea id="mensaje"
+                                  name="mensaje"
+                                  rows="5"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-transparent transition-all duration-200 outline-none resize-none"
+                                  placeholder="Escribe tu mensaje aquí..."
+                                  required></textarea>
                     </div>
-                </div>
 
-                <div class="form-group-contacto">
-                    <label for="mensaje" class="form-label-contacto">
-                        <i class="fas fa-comment-alt"></i> Mensaje
-                    </label>
-                    <textarea id="mensaje"
-                              name="mensaje"
-                              class="form-textarea-contacto"
-                              placeholder="Escribe tu mensaje aquí..."
-                              required></textarea>
-                </div>
-
-                <button type="submit" class="btn-enviar-contacto">
-                    <span>Enviar Mensaje</span>
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </form>
+                    <!-- Botón Enviar -->
+                    <button type="submit"
+                            class="w-full bg-gradient-to-r from-sena-green to-sena-green-dark text-white font-semibold py-4 px-6 rounded-xl hover:from-sena-green-dark hover:to-sena-green-darker focus:outline-none focus:ring-4 focus:ring-sena-green/50 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center group">
+                        <span>Enviar Mensaje</span>
+                        <i class="fas fa-paper-plane ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

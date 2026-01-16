@@ -3,178 +3,230 @@
 {% block title %}Iniciar Sesión - SIAM{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+<style>
+    /* Remover padding del main en login */
+    main { padding: 0 !important; }
+    
+    /* Animaciones personalizadas */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes pulse-ring {
+        0% { transform: scale(0.95); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.7; }
+        100% { transform: scale(0.95); opacity: 1; }
+    }
+    
+    @keyframes gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="login-modern-container">
-    <!-- Left Side - Branding & Info -->
-    <div class="login-left-side">
-        <div class="login-branding">
-            <div class="login-logo-siam">
-                <img src="{{ url_for('static', filename='img/siam.png') }}" alt="Logo SIAM" style="width: 100%; height: auto; max-width: 200px;">
-            </div>
-            <h1 class="login-brand-title">SIAM</h1>
-            <p class="login-brand-subtitle">Sistema Integrado de Articulación y Media Técnica</p>
-            <p class="login-brand-description">SENA CGMLTI</p>
+<div class="min-h-screen flex">
+    <!-- Left Side - Branding & Info (Verde SENA) -->
+    <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#39A900] via-[#2d8500] to-[#1f6000] relative overflow-hidden">
+        <!-- Decorative Background Elements -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
         </div>
-
-        <div class="login-features">
-            <div class="login-feature">
-                <div class="feature-icon">
-                    <i class="fas fa-rocket"></i>
+        
+        <!-- Content -->
+        <div class="relative z-10 flex flex-col justify-center items-center w-full px-12 text-white">
+            <!-- Logo y Título -->
+            <div class="text-center mb-16 animate-fade-in">
+                <div class="mb-6 inline-block">
+                    <img src="{{ url_for('static', filename='img/siam.png') }}" 
+                         alt="Logo SIAM" 
+                         class="w-48 h-auto drop-shadow-2xl hover:scale-110 transition-transform duration-300"
+                         style="animation: float 3s ease-in-out infinite;">
                 </div>
-                <div class="feature-text">
-                    <h3>Proceso Rápido</h3>
-                    <p>Completa tu matrícula en minutos</p>
-                </div>
-            </div>
-
-            <div class="login-feature">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <div class="feature-text">
-                    <h3>Seguro y Confiable</h3>
-                    <p>Tus datos están protegidos</p>
+                <h1 class="text-6xl font-bold mb-4 tracking-tight">SIAM</h1>
+                <p class="text-2xl font-light mb-2 opacity-90">Sistema Integrado de Articulación</p>
+                <p class="text-xl opacity-80">y Media Técnica</p>
+                <div class="mt-4 inline-block px-6 py-2 bg-white/20 backdrop-blur-sm rounded-full">
+                    <p class="text-sm font-semibold">SENA CGMLTI</p>
                 </div>
             </div>
 
-            <div class="login-feature">
-                <div class="feature-icon">
-                    <i class="fas fa-headset"></i>
+            <!-- Features -->
+            <div class="space-y-6 w-full max-w-md">
+                <div class="flex items-start space-x-4 p-6 bg-white/10 backdrop-blur-md rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+                    <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-rocket text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-1">Proceso Rápido</h3>
+                        <p class="text-sm opacity-80">Completa tu matrícula en minutos</p>
+                    </div>
                 </div>
-                <div class="feature-text">
-                    <h3>Soporte 24/7</h3>
-                    <p>Asistencia cuando la necesites</p>
+
+                <div class="flex items-start space-x-4 p-6 bg-white/10 backdrop-blur-md rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+                    <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-1">Seguro y Confiable</h3>
+                        <p class="text-sm opacity-80">Tus datos están protegidos</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4 p-6 bg-white/10 backdrop-blur-md rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+                    <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-headset text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-1">Soporte 24/7</h3>
+                        <p class="text-sm opacity-80">Asistencia cuando la necesites</p>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="login-decoration">
-            <div class="decoration-circle decoration-1"></div>
-            <div class="decoration-circle decoration-2"></div>
-            <div class="decoration-circle decoration-3"></div>
         </div>
     </div>
 
     <!-- Right Side - Login Form -->
-    <div class="login-right-side">
-        <div class="login-form-container">
-            <div class="login-form-header">
-                <h2 class="login-form-title">Bienvenido de nuevo</h2>
-                <p class="login-form-subtitle">Ingresa tus credenciales para continuar</p>
+    <div class="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-6 py-12">
+        <div class="w-full max-w-md">
+            <!-- Mobile Logo -->
+            <div class="lg:hidden text-center mb-8">
+                <img src="{{ url_for('static', filename='img/siam.png') }}" 
+                     alt="Logo SIAM" 
+                     class="w-24 h-auto mx-auto mb-4">
+                <h2 class="text-3xl font-bold text-[#39A900]">SIAM</h2>
             </div>
 
-            <form method="POST" action="{{ url_for('public.login') }}" class="login-form">
+            <!-- Form Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Bienvenido de nuevo</h2>
+                <p class="text-gray-600">Ingresa tus credenciales para continuar</p>
+            </div>
+
+            <!-- Login Form -->
+            <form method="POST" action="{{ url_for('public.login') }}" class="space-y-6" id="loginForm">
                 <!-- Documento Field -->
-                <div class="form-group-modern">
-                    <label for="documento" class="form-label-modern">
-                        <i class="fas fa-id-card"></i> Documento de Identidad
+                <div>
+                    <label for="documento" class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-id-card text-[#39A900] mr-2"></i>Documento de Identidad
                     </label>
-                    <div class="input-wrapper-modern">
-                        <input type="text"
-                               id="documento"
-                               name="documento"
-                               class="form-input-modern"
-                               placeholder="Ingresa tu número de documento"
-                               required
-                               autofocus>
-                        <div class="input-focus-border"></div>
-                    </div>
+                    <input type="text"
+                           id="documento"
+                           name="documento"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#39A900] focus:border-transparent transition-all duration-200 outline-none"
+                           placeholder="Ingresa tu número de documento"
+                           required
+                           autofocus>
                 </div>
 
                 <!-- Password Field -->
-                <div class="form-group-modern">
-                    <label for="password" class="form-label-modern">
-                        <i class="fas fa-lock"></i> Contraseña
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-lock text-[#39A900] mr-2"></i>Contraseña
                     </label>
-                    <div class="input-wrapper-modern password-wrapper">
+                    <div class="relative">
                         <input type="password"
                                id="password"
                                name="password"
-                               class="form-input-modern"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#39A900] focus:border-transparent transition-all duration-200 outline-none pr-12"
                                placeholder="Ingresa tu contraseña"
                                required>
-                        <i class="fas fa-eye password-toggle-modern"
-                           onclick="togglePasswordInput('password', this)"></i>
-                        <div class="input-focus-border"></div>
+                        <button type="button"
+                                onclick="togglePassword()"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#39A900] transition-colors">
+                            <i class="fas fa-eye" id="toggleIcon"></i>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Remember Me -->
-                <div class="form-options-modern">
-                    <label class="checkbox-modern">
-                        <input type="checkbox" id="remember" name="remember" value="true">
-                        <span class="checkbox-custom"></span>
-                        <span class="checkbox-label">Recordarme</span>
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center cursor-pointer group">
+                        <input type="checkbox" 
+                               id="remember" 
+                               name="remember" 
+                               value="true"
+                               class="w-5 h-5 text-[#39A900] border-gray-300 rounded focus:ring-2 focus:ring-[#39A900] cursor-pointer">
+                        <span class="ml-2 text-sm text-gray-700 group-hover:text-[#39A900] transition-colors">Recordarme</span>
                     </label>
-                    <a href="#" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
+                    <a href="#" class="text-sm text-[#39A900] hover:text-[#2d8500] font-medium transition-colors">
+                        ¿Olvidaste tu contraseña?
+                    </a>
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="btn-login-modern">
-                    <span class="btn-text">Iniciar Sesión</span>
-                    <i class="fas fa-arrow-right btn-icon"></i>
+                <button type="submit"
+                        class="w-full bg-gradient-to-r from-[#39A900] to-[#2d8500] text-white font-semibold py-3 px-6 rounded-xl hover:from-[#2d8500] hover:to-[#1f6000] focus:outline-none focus:ring-4 focus:ring-[#39A900]/50 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center group">
+                    <span>Iniciar Sesión</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                 </button>
             </form>
 
             <!-- Register Link -->
-            <div class="login-footer">
-                <p class="register-text">
+            <div class="mt-8 text-center">
+                <p class="text-gray-600">
                     ¿No tienes cuenta?
-                    <a href="{{ url_for('public.registro') }}" class="register-link">Regístrate aquí</a>
+                    <a href="{{ url_for('public.registro') }}" 
+                       class="text-[#39A900] hover:text-[#2d8500] font-semibold transition-colors ml-1">
+                        Regístrate aquí
+                    </a>
                 </p>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-12 text-center text-sm text-gray-500">
+                <p>&copy; 2025 SENA CGMLTI. Todos los derechos reservados.</p>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Loading Spinner -->
-<div class="login-spinner-overlay" id="loginSpinner">
-    <div class="login-spinner-container">
-        <div class="login-spinner-logo">
-            <div class="login-spinner-ring"></div>
-            <img src="{{ url_for('static', filename='img/siam.png') }}" alt="Cargando...">
+<div id="loginSpinner" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-8 flex flex-col items-center space-y-4 shadow-2xl">
+        <div class="relative">
+            <div class="w-20 h-20 border-4 border-gray-200 rounded-full"></div>
+            <div class="absolute top-0 left-0 w-20 h-20 border-4 border-[#39A900] rounded-full border-t-transparent animate-spin"></div>
+            <img src="{{ url_for('static', filename='img/siam.png') }}" 
+                 alt="Cargando..."
+                 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10"
+                 style="animation: pulse-ring 2s ease-in-out infinite;">
         </div>
-        <div class="login-spinner-text">Iniciando sesión...</div>
-        <div class="login-spinner-subtext">Por favor espera</div>
+        <div class="text-center">
+            <p class="text-lg font-semibold text-gray-900">Iniciando sesión...</p>
+            <p class="text-sm text-gray-600">Por favor espera</p>
+        </div>
     </div>
 </div>
 
 <script>
-function togglePasswordInput(inputId, iconElement) {
-    const input = document.getElementById(inputId);
-    if (input.type === 'password') {
-        input.type = 'text';
-        iconElement.classList.remove('fa-eye');
-        iconElement.classList.add('fa-eye-slash');
+function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggleIcon');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
     } else {
-        input.type = 'password';
-        iconElement.classList.remove('fa-eye-slash');
-        iconElement.classList.add('fa-eye');
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
     }
 }
 
-// Add smooth scroll behavior
 document.addEventListener('DOMContentLoaded', function() {
-    // Auto-focus animation
-    const firstInput = document.querySelector('.form-input-modern');
-    if (firstInput) {
-        setTimeout(() => {
-            firstInput.focus();
-        }, 500);
-    }
-
-    // Show spinner on form submit
-    const loginForm = document.querySelector('.login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-            // Mostrar spinner
-            const spinner = document.getElementById('loginSpinner');
-            spinner.classList.add('active');
-        });
-    }
+    const loginForm = document.getElementById('loginForm');
+    const spinner = document.getElementById('loginSpinner');
+    
+    loginForm.addEventListener('submit', function(e) {
+        spinner.classList.remove('hidden');
+        spinner.classList.add('flex');
+    });
 });
 </script>
 {% endblock %}
