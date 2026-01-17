@@ -133,20 +133,26 @@ def registro():
 
     return render_template('public/registro.html', colegios=colegios, form_data=None, error_field=None, today=today)
 
-@public_bp.route('/logout')
+@public_bp.route('/logout', methods=['GET', 'POST'])
 def logout():
     """Cerrar sesión"""
     from flask import session
+    
+    # Limpiar sesión primero
+    session.clear()
+    
+    # Luego hacer logout del usuario
     logout_user()
-    session.clear()  # Limpiar toda la sesión
-    flash('Sesión cerrada exitosamente', 'info')
-
+    
     # Crear respuesta con headers de no-caché
     response = make_response(redirect(url_for('public.index')))
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '-1'
-
+    
+    # Agregar mensaje flash después de crear la respuesta
+    flash('Sesión cerrada exitosamente', 'info')
+    
     return response
 
 @public_bp.route('/dashboard-redirect')

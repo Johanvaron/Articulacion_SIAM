@@ -115,7 +115,7 @@
                                 <span>Documentos</span>
                             </a>
                         {% endif %}
-                        <a href="{{ url_for('public.logout') }}" onclick="event.preventDefault(); showSpinner2('Cerrando sesión...'); setTimeout(() => window.location.href='{{ url_for('public.logout') }}', 300);" class="ml-2 px-6 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 flex items-center space-x-2 shadow-md hover:shadow-lg">
+                        <a href="{{ url_for('public.logout') }}" onclick="sessionStorage.setItem('just_logged_out', 'true');" class="ml-2 px-6 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 flex items-center space-x-2 shadow-md hover:shadow-lg">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Cerrar Sesión</span>
                         </a>
@@ -192,7 +192,7 @@
                             <span>Documentos</span>
                         </a>
                     {% endif %}
-                    <a href="{{ url_for('public.logout') }}" onclick="event.preventDefault(); showSpinner2('Cerrando sesión...'); setTimeout(() => window.location.href='{{ url_for('public.logout') }}', 300);" class="block px-4 py-3 bg-red-500 text-white hover:bg-red-600 rounded-lg transition-colors flex items-center space-x-3 mt-2">
+                    <a href="{{ url_for('public.logout') }}" onclick="sessionStorage.setItem('just_logged_out', 'true');" class="block px-4 py-3 bg-red-500 text-white hover:bg-red-600 rounded-lg transition-colors flex items-center space-x-3 mt-2">
                         <i class="fas fa-sign-out-alt w-5"></i>
                         <span>Cerrar Sesión</span>
                     </a>
@@ -429,6 +429,10 @@
     (function() {
         if (sessionStorage.getItem('user_authenticated') === 'true') {
             sessionStorage.removeItem('user_authenticated');
+            // Forzar recarga sin caché
+            if (performance.navigation.type === 2) {
+                window.location.reload(true);
+            }
             if (window.history && window.history.pushState) {
                 window.history.pushState(null, '', window.location.href);
                 window.addEventListener('popstate', function() {
@@ -438,6 +442,20 @@
         }
     })();
     {% endif %}
+    
+    // Forzar recarga en página de inicio si viene de logout
+    {% if not current_user.is_authenticated %}
+    if (performance.navigation.type === 1 || sessionStorage.getItem('just_logged_out') === 'true') {
+        sessionStorage.removeItem('just_logged_out');
+        // Limpiar completamente el caché
+        if (window.caches) {
+            caches.keys().then(function(names) {
+                for (let name of names) caches.delete(name);
+            });
+        }
+    }
+    {% endif %}
+    
     </script>
     {% block extra_js %}{% endblock %}
 </body>
