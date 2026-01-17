@@ -424,12 +424,13 @@
     {% if current_user.is_authenticated %}
     (function() {
         sessionStorage.setItem('user_authenticated', 'true');
+        sessionStorage.removeItem('just_logged_out');
     })();
     {% else %}
     (function() {
         if (sessionStorage.getItem('user_authenticated') === 'true') {
             sessionStorage.removeItem('user_authenticated');
-            // Forzar recarga sin caché
+            // Forzar recarga sin caché solo si es navegación hacia atrás
             if (performance.navigation.type === 2) {
                 window.location.reload(true);
             }
@@ -440,20 +441,18 @@
                 });
             }
         }
-    })();
-    {% endif %}
-    
-    // Forzar recarga en página de inicio si viene de logout
-    {% if not current_user.is_authenticated %}
-    if (performance.navigation.type === 1 || sessionStorage.getItem('just_logged_out') === 'true') {
-        sessionStorage.removeItem('just_logged_out');
-        // Limpiar completamente el caché
-        if (window.caches) {
-            caches.keys().then(function(names) {
-                for (let name of names) caches.delete(name);
-            });
+        
+        // Solo limpiar caché si realmente se cerró sesión (no en carga normal de páginas públicas)
+        if (sessionStorage.getItem('just_logged_out') === 'true') {
+            sessionStorage.removeItem('just_logged_out');
+            // Limpiar completamente el caché
+            if (window.caches) {
+                caches.keys().then(function(names) {
+                    for (let name of names) caches.delete(name);
+                });
+            }
         }
-    }
+    })();
     {% endif %}
     
     </script>

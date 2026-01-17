@@ -7,6 +7,10 @@ from . import public_bp
 @public_bp.route('/')
 def index():
     """Landing page"""
+    # Si el usuario ya está autenticado, redirigirlo a su dashboard
+    if current_user.is_authenticated:
+        return redirect(url_for('public.dashboard_redirect'))
+    
     from app.models import Aprendiz, Colegio
 
     novedades = Novedad.query.filter_by(activo=True).order_by(Novedad.fecha_publicacion.desc()).limit(6).all()
