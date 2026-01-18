@@ -6,238 +6,239 @@
 
 {% block content %}
 
-<!-- Welcome Section -->
-<div class="welcome-section-admin">
-    <div class="welcome-content-admin">
-        <div class="welcome-text-admin">
-            <h1 class="welcome-title-admin">Panel de Administración</h1>
-            <p class="welcome-subtitle-admin">Bienvenido, {{ current_user.nombre_completo }} - Gestión del Sistema de Articulación SENA</p>
+<!-- Welcome Section with Modern Design -->
+<div class="relative bg-gradient-to-br from-sena-green via-sena-green-dark to-sena-green-darker rounded-3xl shadow-2xl p-8 mb-8 overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="relative z-10 flex items-center justify-between">
+        <div class="flex-1">
+            <h1 class="text-4xl font-extrabold text-white mb-2">Panel de Administración</h1>
+            <p class="text-xl text-white/90">Bienvenido, <span class="font-bold">{{ current_user.nombre_completo }}</span> - Gestión del Sistema de Articulación SENA</p>
         </div>
-        <div class="welcome-icon-admin">
-            <i class="fas fa-user-shield"></i>
+        <div class="hidden md:flex items-center justify-center w-24 h-24 bg-white/20 backdrop-blur-md rounded-2xl shadow-lg">
+            <i class="fas fa-user-shield text-5xl text-white"></i>
         </div>
     </div>
 </div>
 
-<!-- Primary Metrics Grid -->
-<div class="metrics-grid-admin">
-    <div class="metric-card-admin metric-primary-admin">
-        <div class="metric-icon-wrapper-admin">
-            <div class="metric-icon-admin">
-                <i class="fas fa-users"></i>
+<!-- Primary Metrics Grid with Modern Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Card 1: Usuarios -->
+    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center justify-center w-14 h-14 bg-blue-500 rounded-xl shadow-md">
+                <i class="fas fa-users text-2xl text-white"></i>
+            </div>
+            <div class="text-right">
+                <div class="text-3xl font-bold text-blue-700">{{ stats.total_usuarios }}</div>
+                <div class="text-sm text-blue-600 font-medium">Usuarios Totales</div>
             </div>
         </div>
-        <div class="metric-content-admin">
-            <div class="metric-value-admin">{{ stats.total_usuarios }}</div>
-            <div class="metric-label-admin">Usuarios Totales</div>
-            <div class="metric-change-admin positive">
-                <i class="fas fa-arrow-up"></i> Sistema activo
-            </div>
-        </div>
-        <div class="metric-chart-admin">
-            <i class="fas fa-chart-line"></i>
+        <div class="flex items-center text-green-600 text-sm font-semibold">
+            <i class="fas fa-arrow-up mr-1"></i>
+            <span>Sistema activo</span>
         </div>
     </div>
 
-    <div class="metric-card-admin metric-success-admin">
-        <div class="metric-icon-wrapper-admin">
-            <div class="metric-icon-admin">
-                <i class="fas fa-user-graduate"></i>
+    <!-- Card 2: Aprendices -->
+    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center justify-center w-14 h-14 bg-green-500 rounded-xl shadow-md">
+                <i class="fas fa-user-graduate text-2xl text-white"></i>
+            </div>
+            <div class="text-right">
+                <div class="text-3xl font-bold text-green-700">{{ stats.total_aprendices }}</div>
+                <div class="text-sm text-green-600 font-medium">Aprendices Registrados</div>
             </div>
         </div>
-        <div class="metric-content-admin">
-            <div class="metric-value-admin">{{ stats.total_aprendices }}</div>
-            <div class="metric-label-admin">Aprendices Registrados</div>
-            <div class="metric-change-admin positive">
-                <i class="fas fa-users"></i> Activos
-            </div>
-        </div>
-        <div class="metric-chart-admin">
-            <i class="fas fa-graduation-cap"></i>
+        <div class="flex items-center text-green-600 text-sm font-semibold">
+            <i class="fas fa-users mr-1"></i>
+            <span>Activos</span>
         </div>
     </div>
 
-    <div class="metric-card-admin metric-warning-admin">
-        <div class="metric-icon-wrapper-admin">
-            <div class="metric-icon-admin">
-                <i class="fas fa-file-alt"></i>
+    <!-- Card 3: Matrículas Pendientes -->
+    <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl shadow-lg p-6 border-l-4 border-orange-500 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center justify-center w-14 h-14 bg-orange-500 rounded-xl shadow-md">
+                <i class="fas fa-file-alt text-2xl text-white"></i>
+            </div>
+            <div class="text-right">
+                <div class="text-3xl font-bold text-orange-700">{{ stats.matriculas_pendientes }}</div>
+                <div class="text-sm text-orange-600 font-medium">Matrículas Pendientes</div>
             </div>
         </div>
-        <div class="metric-content-admin">
-            <div class="metric-value-admin">{{ stats.matriculas_pendientes }}</div>
-            <div class="metric-label-admin">Matrículas Pendientes</div>
-            <div class="metric-change-admin {% if stats.matriculas_pendientes > 0 %}alert{% else %}positive{% endif %}">
-                {% if stats.matriculas_pendientes > 0 %}
-                <i class="fas fa-exclamation-triangle"></i> Requieren atención
-                {% else %}
-                <i class="fas fa-check-circle"></i> Todo al día
-                {% endif %}
-            </div>
-        </div>
-        <div class="metric-chart-admin">
-            <i class="fas fa-clipboard-check"></i>
+        <div class="flex items-center text-sm font-semibold {% if stats.matriculas_pendientes > 0 %}text-red-600{% else %}text-green-600{% endif %}">
+            {% if stats.matriculas_pendientes > 0 %}
+            <i class="fas fa-exclamation-triangle mr-1"></i>
+            <span>Requieren atención</span>
+            {% else %}
+            <i class="fas fa-check-circle mr-1"></i>
+            <span>Todo al día</span>
+            {% endif %}
         </div>
     </div>
 
-    <div class="metric-card-admin metric-info-admin">
-        <div class="metric-icon-wrapper-admin">
-            <div class="metric-icon-admin">
-                <i class="fas fa-school"></i>
+    <!-- Card 4: Colegios -->
+    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl shadow-lg p-6 border-l-4 border-purple-500 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center justify-center w-14 h-14 bg-purple-500 rounded-xl shadow-md">
+                <i class="fas fa-school text-2xl text-white"></i>
+            </div>
+            <div class="text-right">
+                <div class="text-3xl font-bold text-purple-700">{{ stats.total_colegios }}</div>
+                <div class="text-sm text-purple-600 font-medium">Colegios Activos</div>
             </div>
         </div>
-        <div class="metric-content-admin">
-            <div class="metric-value-admin">{{ stats.total_colegios }}</div>
-            <div class="metric-label-admin">Colegios Activos</div>
-            <div class="metric-change-admin positive">
-                <i class="fas fa-building"></i> Instituciones
-            </div>
-        </div>
-        <div class="metric-chart-admin">
-            <i class="fas fa-city"></i>
+        <div class="flex items-center text-green-600 text-sm font-semibold">
+            <i class="fas fa-building mr-1"></i>
+            <span>Instituciones</span>
         </div>
     </div>
 </div>
 
-<!-- Quick Actions Section -->
-<div class="action-section-admin">
-    <h2 class="section-title-admin">
-        <i class="fas fa-bolt"></i> Acciones Rápidas de Administración
+<!-- Quick Actions Section with Modern Cards -->
+<div class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+        <div class="w-10 h-10 bg-gradient-to-br from-sena-green to-sena-green-dark rounded-lg flex items-center justify-center mr-3 shadow-md">
+            <i class="fas fa-bolt text-white"></i>
+        </div>
+        <span>Acciones Rápidas de Administración</span>
     </h2>
-    <div class="action-grid-admin">
-        <a href="{{ url_for('admin.usuarios') }}" class="action-card-admin action-purple">
-            <div class="action-icon-admin">
-                <i class="fas fa-users-cog"></i>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Gestionar Usuarios -->
+        <a href="{{ url_for('admin.usuarios') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-purple-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-users-cog text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-purple-500 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Gestionar Usuarios</h3>
-                <p>Administrar cuentas y permisos</p>
-            </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Gestionar Usuarios</h3>
+            <p class="text-sm text-gray-600">Administrar cuentas y permisos</p>
         </a>
 
-        <a href="{{ url_for('admin.colegios') }}" class="action-card-admin action-green">
-            <div class="action-icon-admin">
-                <i class="fas fa-school"></i>
+        <!-- Gestionar Colegios -->
+        <a href="{{ url_for('admin.colegios') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-green-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-school text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-green-500 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Gestionar Colegios</h3>
-                <p>Instituciones educativas</p>
-            </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Gestionar Colegios</h3>
+            <p class="text-sm text-gray-600">Instituciones educativas</p>
         </a>
 
-        <a href="{{ url_for('admin.programas') }}" class="action-card-admin action-blue">
-            <div class="action-icon-admin">
-                <i class="fas fa-book-open"></i>
+        <!-- Gestionar Programas -->
+        <a href="{{ url_for('admin.programas') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-blue-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-book-open text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Gestionar Programas</h3>
-                <p>Programas de formación</p>
-            </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Gestionar Programas</h3>
+            <p class="text-sm text-gray-600">Programas de formación</p>
         </a>
 
-        <a href="{{ url_for('admin.grupos') }}" class="action-card-admin action-orange">
-            <div class="action-icon-admin">
-                <i class="fas fa-users-class"></i>
+        <!-- Gestionar Grupos -->
+        <a href="{{ url_for('admin.grupos') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-orange-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-users-class text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-orange-500 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Gestionar Grupos</h3>
-                <p>Fichas y grupos de aprendices</p>
-            </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Gestionar Grupos</h3>
+            <p class="text-sm text-gray-600">Fichas y grupos de aprendices</p>
         </a>
 
-        <a href="{{ url_for('admin.matriculas') }}" class="action-card-admin action-teal">
-            <div class="action-icon-admin">
-                <i class="fas fa-clipboard-list"></i>
+        <!-- Revisar Matrículas -->
+        <a href="{{ url_for('admin.matriculas') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-teal-300 relative">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-clipboard-list text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-teal-500 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Revisar Matrículas</h3>
-                <p>Validación y seguimiento</p>
-                {% if stats.matriculas_pendientes > 0 %}
-                <span class="action-notification-admin">{{ stats.matriculas_pendientes }}</span>
-                {% endif %}
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Revisar Matrículas</h3>
+            <p class="text-sm text-gray-600">Validación y seguimiento</p>
+            {% if stats.matriculas_pendientes > 0 %}
+            <div class="absolute top-3 right-3 w-7 h-7 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                {{ stats.matriculas_pendientes }}
             </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            {% endif %}
         </a>
 
-        <a href="{{ url_for('admin.reportes') }}" class="action-card-admin action-dark">
-            <div class="action-icon-admin">
-                <i class="fas fa-chart-bar"></i>
+        <!-- Generar Reportes -->
+        <a href="{{ url_for('admin.reportes') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-gray-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-chart-bar text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-700 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Generar Reportes</h3>
-                <p>Estadísticas y análisis</p>
-            </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Generar Reportes</h3>
+            <p class="text-sm text-gray-600">Estadísticas y análisis</p>
         </a>
 
-        <a href="{{ url_for('admin.generar_sofia') }}" class="action-card-admin action-success">
-            <div class="action-icon-admin">
-                <i class="fas fa-file-excel"></i>
+        <!-- Formato SOFIA Plus -->
+        <a href="{{ url_for('admin.generar_sofia') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-green-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-green-600 to-green-700 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-file-excel text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-green-600 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Formato SOFIA Plus</h3>
-                <p>Exportar para carga masiva</p>
-            </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Formato SOFIA Plus</h3>
+            <p class="text-sm text-gray-600">Exportar para carga masiva</p>
         </a>
 
-        <a href="{{ url_for('admin.novedades') }}" class="action-card-admin action-pink">
-            <div class="action-icon-admin">
-                <i class="fas fa-bullhorn"></i>
+        <!-- Gestionar Novedades -->
+        <a href="{{ url_for('admin.novedades') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-pink-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-bullhorn text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-pink-500 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Gestionar Novedades</h3>
-                <p>Anuncios y comunicados</p>
-            </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Gestionar Novedades</h3>
+            <p class="text-sm text-gray-600">Anuncios y comunicados</p>
         </a>
 
-        <a href="{{ url_for('admin.mensajes') }}" class="action-card-admin action-gray">
-            <div class="action-icon-admin">
-                <i class="fas fa-envelope"></i>
+        <!-- Ver Mensajes -->
+        <a href="{{ url_for('admin.mensajes') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-gray-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-envelope text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Ver Mensajes</h3>
-                <p>Mensajes de contacto</p>
-            </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Ver Mensajes</h3>
+            <p class="text-sm text-gray-600">Mensajes de contacto</p>
         </a>
 
-        <a href="{{ url_for('admin.simat') }}" class="action-card-admin action-indigo">
-            <div class="action-icon-admin">
-                <i class="fas fa-file-alt"></i>
+        <!-- Documentos SIMAT -->
+        <a href="{{ url_for('admin.simat') }}" class="group bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-indigo-300 relative">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-file-alt text-2xl text-white"></i>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all duration-300"></i>
             </div>
-            <div class="action-content-admin">
-                <h3>Documentos SIMAT</h3>
-                <p>Registro de matrícula estudiantil</p>
-                {% if stats.simat_pendientes is defined and stats.simat_pendientes > 0 %}
-                <span class="action-notification-admin">{{ stats.simat_pendientes }}</span>
-                {% endif %}
+            <h3 class="text-lg font-bold text-gray-800 mb-1">Documentos SIMAT</h3>
+            <p class="text-sm text-gray-600">Registro de matrícula estudiantil</p>
+            {% if stats.simat_pendientes is defined and stats.simat_pendientes > 0 %}
+            <div class="absolute top-3 right-3 w-7 h-7 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                {{ stats.simat_pendientes }}
             </div>
-            <div class="action-arrow-admin">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+            {% endif %}
         </a>
     </div>
 </div>
