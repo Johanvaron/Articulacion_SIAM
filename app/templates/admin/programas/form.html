@@ -3,179 +3,215 @@
 {% block title %}{{ 'Editar' if programa else 'Nuevo' }} Programa - Admin{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <!-- Breadcrumbs -->
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url_for('admin.dashboard') }}"><i class="fas fa-home"></i> Inicio</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('admin.programas') }}">Programas</a></li>
-            <li class="breadcrumb-item active">{{ 'Editar' if programa else 'Nuevo' }}</li>
-        </ol>
-    </nav>
 
-    <!-- Encabezado -->
-    <div class="mb-4">
-        <h2><i class="fas fa-graduation-cap"></i> {{ 'Editar' if programa else 'Nuevo' }} Programa</h2>
+<!-- Header Section with Modern Design -->
+<div class="relative bg-gradient-to-br from-sena-green via-sena-green-dark to-sena-green-darker rounded-3xl shadow-2xl p-8 mb-8 overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
     </div>
-
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="fas fa-edit"></i> Formulario de Programa</h5>
-                </div>
-                <div class="card-body">
-                    <form method="POST">
-                        <!-- Informacion Basica -->
-                        <h6 class="border-bottom pb-2 mb-3"><i class="fas fa-info-circle"></i> Informacion del Programa</h6>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="codigo"><strong>Codigo del Programa</strong></label>
-                                    <input type="text" name="codigo" id="codigo" class="form-control"
-                                           value="{{ programa.codigo if programa else '' }}"
-                                           placeholder="Ej: TEC123">
-                                    <small class="form-text text-muted">Codigo unico (opcional)</small>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="nombre"><strong>Nombre del Programa <span class="text-danger">*</span></strong></label>
-                                    <input type="text" name="nombre" id="nombre" class="form-control"
-                                           value="{{ programa.nombre if programa else '' }}"
-                                           placeholder="Ej: Tecnologo en Analisis y Desarrollo de Software"
-                                           required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="descripcion"><strong>Descripcion</strong></label>
-                            <textarea name="descripcion" id="descripcion" class="form-control" rows="4"
-                                      placeholder="Descripcion del programa academico...">{{ programa.descripcion if programa else '' }}</textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="duracion_horas"><strong>Duracion en Horas</strong></label>
-                            <input type="number" name="duracion_horas" id="duracion_horas" class="form-control"
-                                   value="{{ programa.duracion_horas if programa else '' }}"
-                                   placeholder="Ej: 2640"
-                                   min="0"
-                                   step="1">
-                            <small class="form-text text-muted">Duracion total del programa en horas</small>
-                        </div>
-
-                        <!-- Estado (solo para edicion) -->
-                        {% if programa %}
-                        <h6 class="border-bottom pb-2 mb-3 mt-4"><i class="fas fa-toggle-on"></i> Estado</h6>
-
-                        <div class="form-group">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" name="activo" class="custom-control-input" id="activo"
-                                       {{ 'checked' if programa.activo else '' }}>
-                                <label class="custom-control-label" for="activo">Programa Activo</label>
-                            </div>
-                            <small class="form-text text-muted">Los programas inactivos no se muestran en el registro</small>
-                        </div>
-                        {% endif %}
-
-                        <!-- Botones -->
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ url_for('admin.programas') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Cancelar
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Guardar Programa
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Informacion adicional (solo en edicion) -->
+    
+    <div class="relative z-10">
+        <!-- Breadcrumb -->
+        <nav class="text-white/80 text-sm mb-4 flex items-center">
+            <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
+                <i class="fas fa-home mr-1"></i> Inicio
+            </a>
+            <span class="mx-2">/</span>
+            <a href="{{ url_for('admin.programas') }}" class="hover:text-white transition-colors">
+                Programas
+            </a>
+            <span class="mx-2">/</span>
+            <span class="text-white font-semibold">{{ 'Editar' if programa else 'Nuevo' }}</span>
+        </nav>
+        
+        <!-- Title -->
+        <h1 class="text-4xl font-extrabold text-white mb-2 flex items-center">
+            <i class="fas fa-{% if programa %}edit{% else %}graduation-cap{% endif %} mr-3"></i>
+            {{ 'Editar Programa' if programa else 'Nuevo Programa' }}
+        </h1>
+        <p class="text-xl text-white/90">
             {% if programa %}
-            <div class="card shadow-sm mt-4">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0"><i class="fas fa-chart-bar"></i> Estadisticas del Programa</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>Grupos Asociados:</strong></p>
-                            <p class="text-muted">{{ programa.grupos|length }} grupo(s)</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Aprendices Matriculados:</strong></p>
-                            <p class="text-muted">{{ programa.aprendices|length }} aprendiz(es)</p>
-                        </div>
-                    </div>
-                    {% if programa.grupos %}
-                    <hr>
-                    <p><strong>Grupos:</strong></p>
-                    <ul class="mb-0">
-                        {% for grupo in programa.grupos %}
-                        <li>{{ grupo.nombre }} ({{ grupo.aprendices|length }} aprendices)</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </div>
-            </div>
+            Modifique la información del programa técnico
+            {% else %}
+            Complete el formulario para agregar un nuevo programa
             {% endif %}
-        </div>
+        </p>
     </div>
 </div>
 
-<style>
-/* Breadcrumb */
-.breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1rem;
-    list-style: none;
-    background-color: #f8f9fa;
-    border-radius: 0.25rem;
-}
+<!-- Formulario Principal - Aprovechando todo el ancho -->
+<form method="POST" class="space-y-6">
+    
+    <!-- Sección: Información del Programa -->
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-sena-green to-sena-green-dark px-6 py-4 flex items-center">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                <i class="fas fa-info-circle text-white text-lg"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Información del Programa</h3>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div>
+                    <label for="codigo" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-hashtag text-sena-green mr-1"></i> Código del Programa
+                    </label>
+                    <input type="text"
+                           name="codigo"
+                           id="codigo"
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                           value="{{ programa.codigo if programa else '' }}"
+                           placeholder="TEC-ADM-001">
+                    <small class="text-sm text-gray-500 mt-1 flex items-center">
+                        <i class="fas fa-info-circle mr-1"></i> Código único (opcional)
+                    </small>
+                </div>
+                <div class="md:col-span-2">
+                    <label for="nombre" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-graduation-cap text-sena-green mr-1"></i> Nombre del Programa
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text"
+                           name="nombre"
+                           id="nombre"
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                           value="{{ programa.nombre if programa else '' }}"
+                           placeholder="Técnico en Administración"
+                           required>
+                </div>
+                <div>
+                    <label for="duracion_horas" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-clock text-sena-green mr-1"></i> Duración (Horas)
+                    </label>
+                    <input type="number"
+                           name="duracion_horas"
+                           id="duracion_horas"
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                           value="{{ programa.duracion_horas if programa else '' }}"
+                           placeholder="2640"
+                           min="0"
+                           step="1">
+                    <small class="text-sm text-gray-500 mt-1 flex items-center">
+                        <i class="fas fa-info-circle mr-1"></i> Horas totales
+                    </small>
+                </div>
+            </div>
 
-.breadcrumb-item {
-    display: inline-block;
-}
+            <div>
+                <label for="descripcion" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-align-left text-sena-green mr-1"></i> Descripción
+                </label>
+                <textarea name="descripcion"
+                          id="descripcion"
+                          rows="3"
+                          class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                          placeholder="Descripción del programa académico...">{{ programa.descripcion if programa else '' }}</textarea>
+            </div>
+        </div>
+    </div>
 
-.breadcrumb-item + .breadcrumb-item::before {
-    display: inline-block;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-    color: #6c757d;
-    content: "/";
-}
+    <!-- Sección: Estado y Estadísticas (solo edición) -->
+    {% if programa %}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Estado -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-sena-green-dark to-sena-green px-6 py-4 flex items-center">
+                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-toggle-on text-white text-lg"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Estado</h3>
+            </div>
+            <div class="p-6">
+                <label for="activo" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-power-off text-sena-green mr-1"></i> Estado del Programa
+                </label>
+                <div class="flex items-center space-x-3 bg-gray-50 p-4 rounded-xl border-2 border-gray-200">
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox"
+                               name="activo"
+                               id="activo"
+                               class="sr-only peer"
+                               {{ 'checked' if programa.activo else '' }}>
+                        <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sena-green/30 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-sena-green"></div>
+                    </label>
+                    <span class="text-sm font-medium text-gray-700">
+                        {{ 'Activo' if programa.activo else 'Inactivo' }}
+                    </span>
+                </div>
+                <small class="text-sm text-gray-500 mt-2 flex items-center">
+                    <i class="fas fa-info-circle mr-1"></i> Programas inactivos no se muestran
+                </small>
+            </div>
+        </div>
 
-.breadcrumb-item.active {
-    color: #6c757d;
-}
+        <!-- Stat: Grupos -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4 flex items-center">
+                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-users text-white text-lg"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Grupos</h3>
+            </div>
+            <div class="p-6 text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl mb-3">
+                    <i class="fas fa-users text-white text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-gray-900">{{ programa.grupos|length }}</p>
+                <p class="text-sm text-gray-600 mt-1">Grupos Asociados</p>
+                {% if programa.grupos %}
+                <div class="mt-4 border-t-2 border-gray-100 pt-3">
+                    <div class="space-y-2 max-h-24 overflow-y-auto text-left">
+                        {% for grupo in programa.grupos[:2] %}
+                        <div class="bg-gray-50 p-2 rounded-lg text-xs">
+                            <div class="flex items-center justify-between">
+                                <span class="font-semibold text-gray-800 truncate">{{ grupo.nombre }}</span>
+                                <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold whitespace-nowrap ml-2">
+                                    {{ grupo.aprendices|length }} 👨‍🎓
+                                </span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% if programa.grupos|length > 2 %}
+                        <p class="text-xs text-gray-500 text-center">+{{ programa.grupos|length - 2 }} más</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
 
-.breadcrumb-item a {
-    color: #007bff;
-    text-decoration: none;
-}
+        <!-- Stat: Aprendices -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-green-500 to-green-600 px-6 py-4 flex items-center">
+                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-user-graduate text-white text-lg"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Aprendices</h3>
+            </div>
+            <div class="p-6 text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl mb-3">
+                    <i class="fas fa-user-graduate text-white text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-gray-900">{{ programa.aprendices|length }}</p>
+                <p class="text-sm text-gray-600 mt-1">Aprendices Matriculados</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
-.breadcrumb-item a:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
+    <!-- Botones de Acción -->
+    <div class="flex items-center justify-end gap-4 p-6 bg-gray-50 rounded-2xl border-2 border-gray-200">
+        <a href="{{ url_for('admin.programas') }}" class="inline-flex items-center px-6 py-3 bg-white border-2 border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm">
+            <i class="fas fa-times mr-2"></i>
+            Cancelar
+        </a>
+        <button type="submit" class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-sena-green to-sena-green-dark hover:from-sena-green-dark hover:to-sena-green-darker text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            <i class="fas fa-save mr-2"></i>
+            Guardar Programa
+        </button>
+    </div>
+</form>
 
-/* Form styling */
-h6 {
-    font-weight: 600;
-    color: #2d3748;
-}
-
-.custom-switch {
-    padding-left: 2.5rem;
-}
-
-.custom-control-label {
-    font-weight: 500;
-}
-</style>
 {% endblock %}
