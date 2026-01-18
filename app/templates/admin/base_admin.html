@@ -30,22 +30,90 @@
         }
     </script>
 
+    <style>
+        /* Asegurar que el sidebar sea visible en desktop */
+        .admin-sidebar {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Ocultar botón hamburguesa en desktop */
+        .mobile-menu-toggle {
+            display: none;
+        }
+        
+        @media (min-width: 769px) {
+            .admin-sidebar {
+                transform: translateX(0) !important;
+            }
+            
+            .admin-main {
+                margin-left: 260px !important;
+            }
+        }
+        
+        /* Responsive para móvil */
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 1001;
+            }
+            
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .admin-main {
+                margin-left: 0 !important;
+                width: 100%;
+            }
+            
+            .mobile-menu-toggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.5rem;
+                background: #39A900;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 1.2rem;
+            }
+            
+            .mobile-menu-toggle:hover {
+                background: #2D8700;
+            }
+        }
+    </style>
+
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="bg-gray-50">
+    <!-- Overlay para móvil -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    
     <div class="admin-layout">
         <!-- Sidebar -->
         <aside class="admin-sidebar" id="adminSidebar">
-            <div class="admin-sidebar-header">
+            <div class="admin-sidebar-header" style="background: rgba(0,0,0,0.15); padding: 1.5rem; border-bottom: 2px solid rgba(255,255,255,0.2);">
                 <div class="sena-logo-sidebar" style="text-align: center; margin-bottom: 1rem;">
-                    <img src="{{ url_for('static', filename='img/sena.png') }}" alt="Logo SENA" style="max-width: 80px; height: auto;">
+                    <div style="display: inline-block; background: white; padding: 0.75rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+                        <img src="{{ url_for('static', filename='img/sena.png') }}" alt="Logo SENA" style="width: 45px; height: 45px; display: block;">
+                    </div>
                 </div>
-                <h3>
+                <h3 style="margin: 0 0 0.25rem 0; font-size: 1.25rem; font-weight: 600; color: white; display: flex; align-items: center; gap: 0.5rem;">
                     <i class="fas fa-user-shield"></i>
                     Panel Admin
                 </h3>
-                <div class="user-info">
-                    <i class="fas fa-user"></i> {{ current_user.nombre_completo }}
+                <div class="user-info" style="font-size: 0.85rem; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 0.4rem;">
+                    <i class="fas fa-user" style="font-size: 0.75rem;"></i>
+                    Admin Sistema
                 </div>
             </div>
 
@@ -124,12 +192,12 @@
         <!-- Main Content -->
         <div class="admin-main">
             <!-- Top Bar -->
-            <div class="admin-topbar">
-                <div>
-                    <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+            <div class="admin-topbar" style="background: white; border-bottom: 3px solid #39A900; padding: 1.25rem 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="mobile-menu-toggle" onclick="toggleSidebar()" style="flex-shrink: 0;">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <h1>{% block page_title %}Panel de Administración{% endblock %}</h1>
+                    <h1 style="margin: 0; font-size: 1.75rem; font-weight: 600; color: #2c3e50;">{% block page_title %}Panel de Administración{% endblock %}</h1>
                 </div>
                 <div class="admin-topbar-actions">
                     {% block topbar_actions %}{% endblock %}
@@ -149,26 +217,28 @@
                 <!-- Mensajes flash -->
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
+                        <div class="space-y-3 mb-6">
                         {% for category, message in messages %}
                             <div class="alert alert-{{ category }}">
                                 <i class="fas fa-info-circle"></i>
                                 {{ message }}
                             </div>
                         {% endfor %}
+                        </div>
                     {% endif %}
                 {% endwith %}
 
-                <!-- Page Content -->
+                <!-- Contenido de la página -->
                 {% block content %}{% endblock %}
             </div>
         </div>
     </div>
 
-    <!-- Spinner2 - Alternative spinner with spinner2.png -->
+    <!-- Spinner de carga -->
     <div class="spinner2-overlay" id="spinner2">
         <div class="spinner2-container">
             <div class="spinner2-logo">
-                <img src="{{ url_for('static', filename='img/spinner2.png') }}" alt="Cargando..." class="spinner2-image">
+                <img src="{{ url_for('static', filename='img/sena.png') }}" alt="Cargando..." class="spinner2-image">
             </div>
             <div class="spinner2-text" id="spinner2Text">Procesando...</div>
         </div>
@@ -180,8 +250,32 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
         function toggleSidebar() {
-            document.getElementById('adminSidebar').classList.toggle('open');
+            const sidebar = document.getElementById('adminSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
         }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('adminSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Cerrar sidebar al hacer clic en un enlace (en móvil)
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuLinks = document.querySelectorAll('.admin-menu a');
+            const isMobile = window.innerWidth <= 1024;
+            
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (isMobile) {
+                        closeSidebar();
+                    }
+                });
+            });
+        });
 
         // Funciones para spinner2
         function showSpinner2(message = 'Procesando...') {
@@ -196,6 +290,7 @@
             if (spinner) spinner.classList.remove('active');
         }
     </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -360,15 +360,25 @@ $('#rechazarForm').on('submit', function(e) {
 <style>
 /* Importar estilos de ver_matricula */
 .header-section-ver {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
-    border-radius: 16px;
-    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #39A900 0%, #2d8000 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 2rem;
-    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    gap: 1.5rem;
+    box-shadow: 0 4px 20px rgba(57, 169, 0, 0.3);
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .header-section-ver {
+        padding: 2rem;
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        flex-direction: row;
+    }
 }
 
 .header-left-ver {
@@ -379,8 +389,16 @@ $('#rechazarForm').on('submit', function(e) {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+    .breadcrumb-ver {
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
 }
 
 .breadcrumb-item-ver {
@@ -403,11 +421,18 @@ $('#rechazarForm').on('submit', function(e) {
 }
 
 .page-title-ver {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #fff;
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.75rem 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+    .page-title-ver {
+        font-size: 2rem;
+        margin: 0 0 1rem 0;
+    }
 }
 
 .estado-badge-wrapper-ver {
@@ -434,24 +459,43 @@ $('#rechazarForm').on('submit', function(e) {
 
 .header-actions-ver {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .header-actions-ver {
+        gap: 0.75rem;
+        width: auto;
+    }
 }
 
 .btn-action-ver {
-    padding: 0.75rem 1.5rem;
+    padding: 0.625rem 1.25rem;
     border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 12px;
+    border-radius: 8px;
     background: rgba(255, 255, 255, 0.15);
     color: #fff;
     text-decoration: none;
     font-weight: 600;
+    font-size: 0.875rem;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    flex: 1;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .btn-action-ver {
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        flex: initial;
+    }
 }
 
 .btn-action-ver:hover {
@@ -465,23 +509,42 @@ $('#rechazarForm').on('submit', function(e) {
 
 .content-layout-ver {
     display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
     align-items: start;
+}
+
+@media (min-width: 1024px) {
+    .content-layout-ver {
+        grid-template-columns: 350px 1fr;
+        gap: 2rem;
+    }
 }
 
 .sidebar-ver {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .sidebar-ver {
+        gap: 1.5rem;
+    }
 }
 
 .info-card-ver {
     background: #fff;
-    border-radius: 16px;
+    border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .info-card-ver {
+        border-radius: 16px;
+    }
 }
 
 .info-card-ver:hover {
@@ -489,39 +552,72 @@ $('#rechazarForm').on('submit', function(e) {
 }
 
 .info-card-header-ver {
-    padding: 1.5rem;
+    padding: 1rem;
     background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
     border-bottom: 1px solid #e2e8f0;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .info-card-header-ver {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
 }
 
 .avatar-circle-ver, .icon-circle-ver {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #39A900 0%, #2d8000 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .avatar-circle-ver, .icon-circle-ver {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
 }
 
 .info-card-title-ver {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #2d3748;
     margin: 0;
 }
 
+@media (min-width: 768px) {
+    .info-card-title-ver {
+        font-size: 1.1rem;
+    }
+}
+
 .info-card-body-ver {
-    padding: 1.5rem;
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    .info-card-body-ver {
+        padding: 1.5rem;
+    }
 }
 
 .info-item-ver {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .info-item-ver {
+        margin-bottom: 1.25rem;
+    }
 }
 
 .info-item-ver:last-child {
@@ -563,7 +659,7 @@ $('#rechazarForm').on('submit', function(e) {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #39A900 0%, #2d8000 100%);
     color: #fff;
     border-radius: 50px;
     font-size: 0.9rem;
@@ -573,61 +669,114 @@ $('#rechazarForm').on('submit', function(e) {
 .main-content-ver {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .main-content-ver {
+        gap: 2rem;
+    }
 }
 
 .docs-card-ver {
     background: #fff;
-    border-radius: 16px;
+    border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     overflow: hidden;
 }
 
+@media (min-width: 768px) {
+    .docs-card-ver {
+        border-radius: 16px;
+    }
+}
+
 .docs-card-header-ver {
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #39A900 0%, #2d8000 100%);
+    padding: 1rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .docs-card-header-ver {
+        padding: 1.5rem 2rem;
+    }
 }
 
 .docs-header-content-ver {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .docs-title-ver {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: #fff;
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+@media (min-width: 768px) {
+    .docs-title-ver {
+        font-size: 1.5rem;
+    }
+}
+
 .docs-count-ver {
-    padding: 0.5rem 1.5rem;
+    padding: 0.375rem 1rem;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 50px;
     color: #fff;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
     backdrop-filter: blur(10px);
 }
 
+@media (min-width: 768px) {
+    .docs-count-ver {
+        padding: 0.5rem 1.5rem;
+        font-size: 1.1rem;
+    }
+}
+
 .docs-card-body-ver {
-    padding: 2rem;
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    .docs-card-body-ver {
+        padding: 2rem;
+    }
 }
 
 .docs-grid-ver {
     display: grid;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .docs-grid-ver {
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
 }
 
 .doc-item-ver {
     background: #f7fafc;
-    border-radius: 12px;
-    padding: 1.5rem;
+    border-radius: 8px;
+    padding: 1rem;
     border-left: 4px solid #cbd5e0;
     transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .doc-item-ver {
+        border-radius: 12px;
+        padding: 1.5rem;
+    }
 }
 
 .doc-item-ver:hover {
@@ -642,53 +791,96 @@ $('#rechazarForm').on('submit', function(e) {
 .doc-header-ver {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    gap: 1rem;
+    gap: 0.75rem;
     align-items: start;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .doc-header-ver {
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
 }
 
 .doc-icon-ver {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #39A900 0%, #2d8000 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .doc-icon-ver {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        font-size: 1.5rem;
+    }
 }
 
 .doc-info-ver {
     flex: 1;
+    min-width: 0;
 }
 
 .doc-title-ver {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: #2d3748;
     margin: 0 0 0.25rem 0;
 }
 
+@media (min-width: 768px) {
+    .doc-title-ver {
+        font-size: 1.1rem;
+    }
+}
+
 .doc-filename-ver {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #718096;
     margin: 0 0 0.5rem 0;
     word-break: break-all;
 }
 
+@media (min-width: 768px) {
+    .doc-filename-ver {
+        font-size: 0.85rem;
+    }
+}
+
 .doc-date-ver {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #a0aec0;
 }
 
+@media (min-width: 768px) {
+    .doc-date-ver {
+        font-size: 0.8rem;
+    }
+}
+
 .doc-badge-ver {
-    padding: 0.5rem 1rem;
+    padding: 0.375rem 0.75rem;
     border-radius: 50px;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .doc-badge-ver {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
 }
 
 .badge-pendiente-ver { background: #fef3c7; color: #92400e; }
@@ -707,22 +899,40 @@ $('#rechazarForm').on('submit', function(e) {
 
 .doc-actions-ver {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
 }
 
+@media (min-width: 768px) {
+    .doc-actions-ver {
+        gap: 0.75rem;
+    }
+}
+
 .btn-doc-ver {
-    padding: 0.625rem 1.25rem;
+    padding: 0.5rem 1rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    flex: 1;
+    justify-content: center;
+    min-width: fit-content;
+}
+
+@media (min-width: 768px) {
+    .btn-doc-ver {
+        padding: 0.625rem 1.25rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        flex: initial;
+    }
 }
 
 .btn-view-ver {
@@ -777,7 +987,7 @@ $('#rechazarForm').on('submit', function(e) {
 .progress-value-ver {
     font-weight: 700;
     font-size: 1.1rem;
-    color: #667eea;
+    color: #39A900;
 }
 
 .progress-bar-wrapper-ver {
@@ -790,7 +1000,7 @@ $('#rechazarForm').on('submit', function(e) {
 
 .progress-bar-ver {
     height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(90deg, #39A900 0%, #2d8000 100%);
     border-radius: 50px;
     transition: width 0.6s ease;
 }
@@ -844,7 +1054,7 @@ $('#rechazarForm').on('submit', function(e) {
 }
 
 .matricula-final-ver .action-card-header-ver {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #39A900 0%, #2d8000 100%);
 }
 
 .alert-info-ver {
@@ -928,7 +1138,7 @@ $('#rechazarForm').on('submit', function(e) {
 
 .btn-submit-ver {
     padding: 0.875rem 2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #39A900 0%, #2d8000 100%);
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -943,7 +1153,7 @@ $('#rechazarForm').on('submit', function(e) {
 
 .btn-submit-ver:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 12px rgba(57, 169, 0, 0.4);
 }
 
 /* Modales */
@@ -973,7 +1183,7 @@ $('#rechazarForm').on('submit', function(e) {
     left: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
-    border-radius: 16px;
+    border-radius: 12px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     max-width: 500px;
     width: 90%;
@@ -981,12 +1191,24 @@ $('#rechazarForm').on('submit', function(e) {
     overflow: auto;
 }
 
+@media (min-width: 768px) {
+    .modal-content-ver {
+        border-radius: 16px;
+    }
+}
+
 .modal-header-ver {
-    padding: 1.5rem 2rem;
+    padding: 1rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #e2e8f0;
+}
+
+@media (min-width: 768px) {
+    .modal-header-ver {
+        padding: 1.5rem 2rem;
+    }
 }
 
 .modal-header-success-ver {
@@ -1001,11 +1223,17 @@ $('#rechazarForm').on('submit', function(e) {
 
 .modal-header-ver h3 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .modal-header-ver h3 {
+        font-size: 1.25rem;
+    }
 }
 
 .modal-close-ver {
@@ -1029,15 +1257,29 @@ $('#rechazarForm').on('submit', function(e) {
 }
 
 .modal-body-ver {
-    padding: 2rem;
+    padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .modal-body-ver {
+        padding: 2rem;
+    }
 }
 
 .modal-footer-ver {
-    padding: 1.5rem 2rem;
+    padding: 1rem 1.5rem;
     background: #f7fafc;
     display: flex;
     justify-content: flex-end;
-    gap: 1rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+    .modal-footer-ver {
+        padding: 1.5rem 2rem;
+        gap: 1rem;
+    }
 }
 
 .btn-cancel-ver {
@@ -1088,17 +1330,6 @@ $('#rechazarForm').on('submit', function(e) {
 
 .text-danger {
     color: #e53e3e;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .content-layout-ver {
-        grid-template-columns: 1fr;
-    }
-
-    .header-section-ver {
-        flex-direction: column;
-    }
 }
 </style>
 {% endblock %}

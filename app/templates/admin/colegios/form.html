@@ -5,9 +5,9 @@
 {% block content %}
 
 <!-- Header Section - Estilo limpio y profesional -->
-<div class="bg-sena-green rounded-2xl shadow-lg p-8 mb-8">
+<div class="bg-sena-green rounded-xl md:rounded-2xl shadow-lg p-4 md:p-8 mb-6 md:mb-8">
     <!-- Breadcrumb -->
-    <nav class="text-white/80 text-sm mb-4 flex items-center">
+    <nav class="text-white/80 text-xs md:text-sm mb-3 md:mb-4 flex items-center flex-wrap">
         <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
             <i class="fas fa-home mr-1"></i> Dashboard
         </a>
@@ -20,11 +20,11 @@
     </nav>
     
     <!-- Título -->
-    <h1 class="text-4xl font-bold text-white mb-2 flex items-center">
-        <i class="fas fa-{% if colegio %}edit{% else %}school{% endif %} mr-3"></i>
+    <h1 class="text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2 flex items-center">
+        <i class="fas fa-{% if colegio %}edit{% else %}school{% endif %} mr-2 md:mr-3"></i>
         {{ 'Editar Colegio' if colegio else 'Nuevo Colegio' }}
     </h1>
-    <p class="text-lg text-white">
+    <p class="text-sm md:text-lg text-white/90">
         {% if colegio %}
         Modifique la información del colegio en el sistema
         {% else %}
@@ -34,17 +34,17 @@
 </div>
 
 <!-- Form Container -->
-<form method="POST" class="space-y-6">
+<form method="POST" class="space-y-4 md:space-y-6">
     
     <!-- Sección: Información Básica -->
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-sena-green to-sena-green-dark px-6 py-4 flex items-center">
-            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
-                <i class="fas fa-info-circle text-white text-lg"></i>
+    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-sena-green to-sena-green-dark px-4 md:px-6 py-3 md:py-4 flex items-center">
+            <div class="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-lg flex items-center justify-center mr-2 md:mr-3">
+                <i class="fas fa-info-circle text-white text-base md:text-lg"></i>
             </div>
-            <h3 class="text-xl font-bold text-white">Información Básica</h3>
+            <h3 class="text-base md:text-xl font-bold text-white">Información Básica</h3>
         </div>
-        <div class="p-6 space-y-6">
+        <div class="p-4 md:p-6 space-y-4 md:space-y-6">
             <div>
                 <label for="nombre" class="block text-sm font-semibold text-gray-700 mb-2">
                     <i class="fas fa-school text-sena-green mr-1"></i> Nombre del Colegio
@@ -53,19 +53,19 @@
                 <input type="text"
                        name="nombre"
                        id="nombre"
-                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                       class="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50 text-sm md:text-base"
                        value="{{ colegio.nombre if colegio else '' }}"
                        required
                        placeholder="Nombre completo de la institución">
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                     <label for="tipo_colegio" class="block text-sm font-semibold text-gray-700 mb-2">
                         <i class="fas fa-tag text-sena-green mr-1"></i> Tipo de Colegio
                         <span class="text-red-500">*</span>
                     </label>
-                    <select name="tipo_colegio" id="tipo_colegio" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50" required>
+                    <select name="tipo_colegio" id="tipo_colegio" class="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50 text-sm md:text-base" required>
                         <option value="PUBLICO" {{ 'selected' if colegio and colegio.tipo_colegio == 'PUBLICO' else '' }}>🏛️ Público</option>
                         <option value="PRIVADO" {{ 'selected' if colegio and colegio.tipo_colegio == 'PRIVADO' else '' }}>🏢 Privado</option>
                         <option value="MIXTO" {{ 'selected' if colegio and colegio.tipo_colegio == 'MIXTO' else '' }}>🏫 Mixto</option>
@@ -79,13 +79,13 @@
                     <input type="text"
                            name="direccion"
                            id="direccion"
-                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                           class="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50 text-sm md:text-base"
                            value="{{ colegio.direccion if colegio else '' }}"
                            placeholder="Dirección completa">
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                     <label for="telefono" class="block text-sm font-semibold text-gray-700 mb-2">
                         <i class="fas fa-phone text-sena-green mr-1"></i> Teléfono
@@ -93,7 +93,7 @@
                     <input type="tel"
                            name="telefono"
                            id="telefono"
-                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                           class="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50 text-sm md:text-base"
                            value="{{ colegio.telefono if colegio else '' }}"
                            placeholder="Teléfono de contacto">
                 </div>
@@ -105,7 +105,7 @@
                     <input type="email"
                            name="email"
                            id="email"
-                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                           class="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50 text-sm md:text-base"
                            value="{{ colegio.email if colegio else '' }}"
                            placeholder="correo@colegio.edu.co">
                 </div>
@@ -114,19 +114,19 @@
     </div>
 
     <!-- Sección: Responsables -->
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-sena-green-dark to-sena-green px-6 py-4 flex items-center">
-            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
-                <i class="fas fa-users text-white text-lg"></i>
+    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-sena-green-dark to-sena-green px-4 md:px-6 py-3 md:py-4 flex items-center">
+            <div class="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-lg flex items-center justify-center mr-2 md:mr-3">
+                <i class="fas fa-users text-white text-base md:text-lg"></i>
             </div>
-            <h3 class="text-xl font-bold text-white">Responsables</h3>
+            <h3 class="text-base md:text-xl font-bold text-white">Responsables</h3>
         </div>
-        <div class="p-6 space-y-6">
+        <div class="p-4 md:p-6 space-y-4 md:space-y-6">
             <div>
                 <label for="rector_id" class="block text-sm font-semibold text-gray-700 mb-2">
                     <i class="fas fa-user-tie text-sena-green mr-1"></i> Rector
                 </label>
-                <select name="rector_id" id="rector_id" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50">
+                <select name="rector_id" id="rector_id" class="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50 text-sm md:text-base">
                     <option value="">-- Seleccionar Rector --</option>
                     {% for usuario in rectores %}
                     <option value="{{ usuario.id }}" {{ 'selected' if colegio and colegio.rector_id == usuario.id else '' }}>
@@ -134,7 +134,7 @@
                     </option>
                     {% endfor %}
                 </select>
-                <small class="text-sm text-gray-500 mt-1 flex items-center">
+                <small class="text-xs md:text-sm text-gray-500 mt-1 flex items-center">
                     <i class="fas fa-info-circle mr-1"></i> Solo usuarios con rol RECTOR
                 </small>
             </div>
@@ -143,7 +143,7 @@
                 <label for="docente_enlace_id" class="block text-sm font-semibold text-gray-700 mb-2">
                     <i class="fas fa-chalkboard-teacher text-sena-green mr-1"></i> Docente Enlace
                 </label>
-                <select name="docente_enlace_id" id="docente_enlace_id" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50">
+                <select name="docente_enlace_id" id="docente_enlace_id" class="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50 text-sm md:text-base">
                     <option value="">-- Seleccionar Docente Enlace --</option>
                     {% for usuario in docentes %}
                     <option value="{{ usuario.id }}" {{ 'selected' if colegio and colegio.docente_enlace_id == usuario.id else '' }}>
@@ -151,7 +151,7 @@
                     </option>
                     {% endfor %}
                 </select>
-                <small class="text-sm text-gray-500 mt-1 flex items-center">
+                <small class="text-xs md:text-sm text-gray-500 mt-1 flex items-center">
                     <i class="fas fa-info-circle mr-1"></i> Solo usuarios con rol DOCENTE
                 </small>
             </div>
@@ -160,31 +160,31 @@
 
     <!-- Sección: Estado (solo para edición) -->
     {% if colegio %}
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-sena-green-darker to-sena-green-dark px-6 py-4 flex items-center">
-            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
-                <i class="fas fa-toggle-on text-white text-lg"></i>
+    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-sena-green-darker to-sena-green-dark px-4 md:px-6 py-3 md:py-4 flex items-center">
+            <div class="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-lg flex items-center justify-center mr-2 md:mr-3">
+                <i class="fas fa-toggle-on text-white text-base md:text-lg"></i>
             </div>
-            <h3 class="text-xl font-bold text-white">Estado</h3>
+            <h3 class="text-base md:text-xl font-bold text-white">Estado</h3>
         </div>
-        <div class="p-6">
+        <div class="p-4 md:p-6">
             <label for="activo" class="block text-sm font-semibold text-gray-700 mb-2">
                 <i class="fas fa-power-off text-sena-green mr-1"></i> Estado del Colegio
             </label>
-            <div class="flex items-center space-x-3 bg-gray-50 p-4 rounded-xl border-2 border-gray-200">
+            <div class="flex items-center space-x-3 bg-gray-50 p-3 md:p-4 rounded-lg md:rounded-xl border-2 border-gray-200">
                 <label class="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox"
                            name="activo"
                            id="activo"
                            class="sr-only peer"
                            {{ 'checked' if colegio.activo else '' }}>
-                    <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sena-green/30 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-sena-green"></div>
+                    <div class="w-11 h-6 md:w-14 md:h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sena-green/30 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 md:after:h-6 md:after:w-6 after:transition-all peer-checked:bg-sena-green"></div>
                 </label>
-                <span class="text-sm font-medium text-gray-700">
+                <span class="text-xs md:text-sm font-medium text-gray-700">
                     Colegio {{ 'Activo' if colegio.activo else 'Inactivo' }}
                 </span>
             </div>
-            <small class="text-sm text-gray-500 mt-2 flex items-center">
+            <small class="text-xs md:text-sm text-gray-500 mt-2 flex items-center">
                 <i class="fas fa-info-circle mr-1"></i> Los colegios inactivos no aparecerán en las listas de selección
             </small>
         </div>
@@ -192,12 +192,12 @@
     {% endif %}
 
     <!-- Botones de Acción -->
-    <div class="flex items-center justify-end gap-4 p-6 bg-gray-50 rounded-2xl border-2 border-gray-200">
-        <a href="{{ url_for('admin.colegios') }}" class="inline-flex items-center px-6 py-3 bg-white border-2 border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm">
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 md:gap-4 p-4 md:p-6 bg-gray-50 rounded-xl md:rounded-2xl border-2 border-gray-200">
+        <a href="{{ url_for('admin.colegios') }}" class="inline-flex items-center justify-center px-4 md:px-6 py-2.5 md:py-3 bg-white border-2 border-gray-300 rounded-lg md:rounded-xl font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm text-sm md:text-base">
             <i class="fas fa-times mr-2"></i>
             Cancelar
         </a>
-        <button type="submit" class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-sena-green to-sena-green-dark hover:from-sena-green-dark hover:to-sena-green-darker text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+        <button type="submit" class="inline-flex items-center justify-center px-6 md:px-8 py-2.5 md:py-3 bg-gradient-to-r from-sena-green to-sena-green-dark hover:from-sena-green-dark hover:to-sena-green-darker text-white font-bold rounded-lg md:rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base">
             <i class="fas fa-save mr-2"></i>
             Guardar Colegio
         </button>
