@@ -30,10 +30,12 @@ body {
 /* Sidebar */
 .aprendiz-sidebar {
     width: 260px;
-    background: linear-gradient(180deg, var(--sena-verde-principal) 0%, var(--sena-verde-oscuro) 100%);
+    background: linear-gradient(180deg, #39A900 0%, #2D8700 100%);
     color: white;
     padding: 0;
     position: fixed;
+    top: 0;
+    left: 0;
     height: 100vh;
     overflow-y: auto;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
@@ -42,8 +44,9 @@ body {
 
 .aprendiz-sidebar-header {
     padding: 1.5rem;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.15);
     border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
 }
 
 .aprendiz-sidebar-header h3 {

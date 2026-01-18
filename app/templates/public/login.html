@@ -186,20 +186,13 @@
 </div>
 
 <!-- Loading Spinner -->
-<div id="loginSpinner" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
-    <div class="bg-white rounded-2xl p-8 flex flex-col items-center space-y-4 shadow-2xl">
-        <div class="relative">
-            <div class="w-20 h-20 border-4 border-gray-200 rounded-full"></div>
-            <div class="absolute top-0 left-0 w-20 h-20 border-4 border-[#39A900] rounded-full border-t-transparent animate-spin"></div>
-            <img src="{{ url_for('static', filename='img/siam.png') }}" 
-                 alt="Cargando..."
-                 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10"
-                 style="animation: pulse-ring 2s ease-in-out infinite;">
+<div id="loginSpinner" class="spinner2-overlay">
+    <div class="spinner2-container">
+        <div class="spinner2-logo">
+            <img src="{{ url_for('static', filename='img/sena.png') }}" alt="Cargando..." class="spinner2-image">
         </div>
-        <div class="text-center">
-            <p class="text-lg font-semibold text-gray-900">Iniciando sesión...</p>
-            <p class="text-sm text-gray-600">Por favor espera</p>
-        </div>
+        <div class="spinner2-text">Iniciando sesión...</div>
+        <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">Por favor espera</p>
     </div>
 </div>
 
@@ -224,8 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const spinner = document.getElementById('loginSpinner');
     
     loginForm.addEventListener('submit', function(e) {
-        spinner.classList.remove('hidden');
-        spinner.classList.add('flex');
+        spinner.classList.add('active');
     });
 });
 </script>
