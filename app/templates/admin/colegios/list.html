@@ -1,101 +1,240 @@
 {% extends "admin/base_admin.html" %}
 
-{% block title %}Gesti�n de Colegios - Admin{% endblock %}
-
-{% block page_title %}<i class="fas fa-school"></i> Gesti�n de Colegios{% endblock %}
-
-{% block breadcrumb_items %}
-<span class="breadcrumb-separator">/</span>
-<span>Colegios</span>
-{% endblock %}
-
-{% block topbar_actions %}
-<a href="{{ url_for('admin.crear_colegio') }}" class="btn btn-primary">
-    <i class="fas fa-plus"></i> Nuevo Colegio
-</a>
-{% endblock %}
+{% block title %}Gestión de Colegios - Admin{% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-body">
-        <!-- Filtros -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar colegio...">
+
+<!-- Header Section with Modern Design -->
+<div class="relative bg-gradient-to-br from-sena-green via-sena-green-dark to-sena-green-darker rounded-3xl shadow-2xl p-8 mb-8 overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="relative z-10">
+        <!-- Breadcrumb -->
+        <nav class="text-white/80 text-sm mb-4 flex items-center">
+            <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
+                <i class="fas fa-home mr-1"></i> Dashboard
+            </a>
+            <span class="mx-2">/</span>
+            <span class="text-white font-semibold">Colegios</span>
+        </nav>
+        
+        <!-- Title and Action Button -->
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-4xl font-extrabold text-white mb-2 flex items-center">
+                    <i class="fas fa-school mr-3"></i>
+                    Gestión de Colegios
+                </h1>
+                <p class="text-xl text-white/90">
+                    Administre las instituciones educativas del sistema
+                </p>
             </div>
-            <div class="col-md-3">
-                <select id="tipoFilter" class="form-control">
+            <a href="{{ url_for('admin.crear_colegio') }}" class="inline-flex items-center px-6 py-3 bg-white text-sena-green font-bold rounded-xl hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <i class="fas fa-plus mr-2"></i>
+                Nuevo Colegio
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-sena-green">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-semibold text-gray-500 uppercase">Total Colegios</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ colegios|length }}</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-sena-green to-sena-green-dark rounded-xl flex items-center justify-center">
+                <i class="fas fa-school text-white text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-semibold text-gray-500 uppercase">Públicos</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ colegios|selectattr('tipo_colegio', 'equalto', 'PUBLICO')|list|length }}</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-landmark text-white text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-purple-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-semibold text-gray-500 uppercase">Privados</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ colegios|selectattr('tipo_colegio', 'equalto', 'PRIVADO')|list|length }}</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-building text-white text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-green-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-semibold text-gray-500 uppercase">Activos</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ colegios|selectattr('activo', 'equalto', True)|list|length }}</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-check-circle text-white text-2xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filters and Table Section -->
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <!-- Filters -->
+    <div class="p-6 bg-gray-50 border-b-2 border-gray-200">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-1">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-search text-sena-green mr-1"></i> Buscar colegio
+                </label>
+                <input type="text" id="searchInput" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none" placeholder="Buscar por nombre, dirección, teléfono...">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-filter text-sena-green mr-1"></i> Tipo de colegio
+                </label>
+                <select id="tipoFilter" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-white">
                     <option value="">Todos los tipos</option>
-                    <option value="PUBLICO">P�blico</option>
+                    <option value="PUBLICO">Público</option>
                     <option value="PRIVADO">Privado</option>
                     <option value="MIXTO">Mixto</option>
                 </select>
             </div>
-            <div class="col-md-3">
-                <select id="estadoFilter" class="form-control">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-toggle-on text-sena-green mr-1"></i> Estado
+                </label>
+                <select id="estadoFilter" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-white">
                     <option value="">Todos los estados</option>
                     <option value="true">Activos</option>
                     <option value="false">Inactivos</option>
                 </select>
             </div>
         </div>
+    </div>
 
-        <!-- Tabla -->
-        <div class="table-responsive">
-            <table class="table table-hover" id="colegiosTable">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Tipo</th>
-                        <th>Direcci�n</th>
-                        <th>Tel�fono</th>
-                        <th>Email</th>
-                        <th>Grupos</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for colegio in colegios %}
-                    <tr data-tipo="{{ colegio.tipo_colegio }}" data-activo="{{ colegio.activo }}">
-                        <td><strong>{{ colegio.nombre }}</strong></td>
-                        <td><span class="badge badge-{{ 'primary' if colegio.tipo_colegio == 'PUBLICO' else 'info' }}">{{ colegio.tipo_colegio }}</span></td>
-                        <td>{{ colegio.direccion or '-' }}</td>
-                        <td>{{ colegio.telefono or '-' }}</td>
-                        <td>{{ colegio.email or '-' }}</td>
-                        <td>
-                            <span class="badge badge-secondary">{{ colegio.grupos|length }} grupos</span>
-                        </td>
-                        <td>
-                            <span class="badge badge-{{ 'success' if colegio.activo else 'secondary' }}">
-                                {{ 'Activo' if colegio.activo else 'Inactivo' }}
-                            </span>
-                        </td>
-                        <td>
+    <!-- Table -->
+    {% if colegios %}
+    <div class="overflow-x-auto">
+        <table class="w-full" id="colegiosTable">
+            <thead class="bg-gray-50 border-b-2 border-gray-200">
+                <tr>
+                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Nombre</th>
+                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Tipo</th>
+                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Dirección</th>
+                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Teléfono</th>
+                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Email</th>
+                    <th class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">Grupos</th>
+                    <th class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">Estado</th>
+                    <th class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for colegio in colegios %}
+                <tr data-tipo="{{ colegio.tipo_colegio }}" data-activo="{{ colegio.activo }}" class="hover:bg-gray-50 transition-colors duration-150">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-sena-green to-sena-green-dark rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-school text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-bold text-gray-900">{{ colegio.nombre }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        {% if colegio.tipo_colegio == 'PUBLICO' %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                            <i class="fas fa-landmark mr-1"></i> PÚBLICO
+                        </span>
+                        {% elif colegio.tipo_colegio == 'PRIVADO' %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800">
+                            <i class="fas fa-building mr-1"></i> PRIVADO
+                        </span>
+                        {% else %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
+                            <i class="fas fa-school mr-1"></i> MIXTO
+                        </span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-700">
+                        <i class="fas fa-map-marker-alt text-gray-400 mr-1"></i>
+                        {{ colegio.direccion or '-' }}
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-700">
+                        <i class="fas fa-phone text-gray-400 mr-1"></i>
+                        {{ colegio.telefono or '-' }}
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-700">
+                        <i class="fas fa-envelope text-gray-400 mr-1"></i>
+                        {{ colegio.email or '-' }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
+                            <i class="fas fa-users mr-1"></i> {{ colegio.grupos|length }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {% if colegio.activo %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                            <i class="fas fa-check-circle mr-1"></i> Activo
+                        </span>
+                        {% else %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
+                            <i class="fas fa-times-circle mr-1"></i> Inactivo
+                        </span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex items-center justify-center gap-2">
                             <a href="{{ url_for('admin.editar_colegio', colegio_id=colegio.id) }}"
-                               class="btn btn-sm btn-info" title="Editar">
+                               class="inline-flex items-center px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200"
+                               title="Editar">
                                 <i class="fas fa-edit"></i>
                             </a>
                             {% if colegio.grupos|length == 0 %}
                             <form method="POST" action="{{ url_for('admin.eliminar_colegio', colegio_id=colegio.id) }}" style="display:inline;" onsubmit="return confirm('¿Está seguro de eliminar este colegio?')">
-                                <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
+                                <button type="submit" 
+                                        class="inline-flex items-center px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-200"
+                                        title="Eliminar">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
                             {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        {% if not colegios %}
-        <div class="alert alert-info">
-            <i class="fas fa-info-circle"></i> No hay colegios registrados
-        </div>
-        {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+    {% else %}
+    <div class="p-8 text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+            <i class="fas fa-school text-gray-400 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">No hay colegios registrados</h3>
+        <p class="text-gray-600 mb-4">Comience agregando su primer colegio al sistema</p>
+        <a href="{{ url_for('admin.crear_colegio') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-sena-green to-sena-green-dark hover:from-sena-green-dark hover:to-sena-green-darker text-white font-bold rounded-xl transition-all duration-200 shadow-lg">
+            <i class="fas fa-plus mr-2"></i>
+            Crear Primer Colegio
+        </a>
+    </div>
+    {% endif %}
 </div>
 
 <script>

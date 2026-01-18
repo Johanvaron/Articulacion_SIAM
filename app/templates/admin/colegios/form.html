@@ -3,178 +3,213 @@
 {% block title %}{{ 'Editar' if colegio else 'Nuevo' }} Colegio - Admin{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <!-- Breadcrumbs -->
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url_for('admin.dashboard') }}"><i class="fas fa-home"></i> Inicio</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('admin.colegios') }}">Colegios</a></li>
-            <li class="breadcrumb-item active">{{ 'Editar' if colegio else 'Nuevo' }}</li>
-        </ol>
-    </nav>
 
-    <!-- Encabezado -->
-    <div class="mb-4">
-        <h2><i class="fas fa-school"></i> {{ 'Editar' if colegio else 'Nuevo' }} Colegio</h2>
+<!-- Header Section with Modern Design -->
+<div class="relative bg-gradient-to-br from-sena-green via-sena-green-dark to-sena-green-darker rounded-3xl shadow-2xl p-8 mb-8 overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
     </div>
+    
+    <div class="relative z-10">
+        <!-- Breadcrumb -->
+        <nav class="text-white/80 text-sm mb-4 flex items-center">
+            <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
+                <i class="fas fa-home mr-1"></i> Inicio
+            </a>
+            <span class="mx-2">/</span>
+            <a href="{{ url_for('admin.colegios') }}" class="hover:text-white transition-colors">
+                Colegios
+            </a>
+            <span class="mx-2">/</span>
+            <span class="text-white font-semibold">{{ 'Editar' if colegio else 'Nuevo' }}</span>
+        </nav>
+        
+        <!-- Title -->
+        <h1 class="text-4xl font-extrabold text-white mb-2 flex items-center">
+            <i class="fas fa-{% if colegio %}edit{% else %}school{% endif %} mr-3"></i>
+            {{ 'Editar Colegio' if colegio else 'Nuevo Colegio' }}
+        </h1>
+        <p class="text-xl text-white/90">
+            {% if colegio %}
+            Modifique la información del colegio en el sistema
+            {% else %}
+            Complete el formulario para agregar un nuevo colegio
+            {% endif %}
+        </p>
+    </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="fas fa-edit"></i> Formulario de Colegio</h5>
+<!-- Form Container -->
+<form method="POST" class="space-y-6">
+    
+    <!-- Sección: Información Básica -->
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-sena-green to-sena-green-dark px-6 py-4 flex items-center">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                <i class="fas fa-info-circle text-white text-lg"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Información Básica</h3>
+        </div>
+        <div class="p-6 space-y-6">
+            <div>
+                <label for="nombre" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-school text-sena-green mr-1"></i> Nombre del Colegio
+                    <span class="text-red-500">*</span>
+                </label>
+                <input type="text"
+                       name="nombre"
+                       id="nombre"
+                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                       value="{{ colegio.nombre if colegio else '' }}"
+                       required
+                       placeholder="Nombre completo de la institución">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="tipo_colegio" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-tag text-sena-green mr-1"></i> Tipo de Colegio
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <select name="tipo_colegio" id="tipo_colegio" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50" required>
+                        <option value="PUBLICO" {{ 'selected' if colegio and colegio.tipo_colegio == 'PUBLICO' else '' }}>🏛️ Público</option>
+                        <option value="PRIVADO" {{ 'selected' if colegio and colegio.tipo_colegio == 'PRIVADO' else '' }}>🏢 Privado</option>
+                        <option value="MIXTO" {{ 'selected' if colegio and colegio.tipo_colegio == 'MIXTO' else '' }}>🏫 Mixto</option>
+                    </select>
                 </div>
-                <div class="card-body">
-                    <form method="POST">
-                        <!-- Informacion Basica -->
-                        <h6 class="border-bottom pb-2 mb-3"><i class="fas fa-info-circle"></i> Informacion Basica</h6>
 
-                        <div class="form-group">
-                            <label for="nombre"><strong>Nombre del Colegio <span class="text-danger">*</span></strong></label>
-                            <input type="text" name="nombre" id="nombre" class="form-control"
-                                   value="{{ colegio.nombre if colegio else '' }}" required>
-                        </div>
+                <div>
+                    <label for="direccion" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-map-marker-alt text-sena-green mr-1"></i> Dirección
+                    </label>
+                    <input type="text"
+                           name="direccion"
+                           id="direccion"
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                           value="{{ colegio.direccion if colegio else '' }}"
+                           placeholder="Dirección completa">
+                </div>
+            </div>
 
-                        <div class="form-group">
-                            <label for="tipo_colegio"><strong>Tipo de Colegio <span class="text-danger">*</span></strong></label>
-                            <select name="tipo_colegio" id="tipo_colegio" class="form-control" required>
-                                <option value="PUBLICO" {{ 'selected' if colegio and colegio.tipo_colegio == 'PUBLICO' else '' }}>Publico</option>
-                                <option value="PRIVADO" {{ 'selected' if colegio and colegio.tipo_colegio == 'PRIVADO' else '' }}>Privado</option>
-                                <option value="MIXTO" {{ 'selected' if colegio and colegio.tipo_colegio == 'MIXTO' else '' }}>Mixto</option>
-                            </select>
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="telefono" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-phone text-sena-green mr-1"></i> Teléfono
+                    </label>
+                    <input type="tel"
+                           name="telefono"
+                           id="telefono"
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                           value="{{ colegio.telefono if colegio else '' }}"
+                           placeholder="Teléfono de contacto">
+                </div>
 
-                        <div class="form-group">
-                            <label for="direccion"><strong>Direccion</strong></label>
-                            <input type="text" name="direccion" id="direccion" class="form-control"
-                                   value="{{ colegio.direccion if colegio else '' }}">
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="telefono"><strong>Telefono</strong></label>
-                                    <input type="tel" name="telefono" id="telefono" class="form-control"
-                                           value="{{ colegio.telefono if colegio else '' }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="email"><strong>Email</strong></label>
-                                    <input type="email" name="email" id="email" class="form-control"
-                                           value="{{ colegio.email if colegio else '' }}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Responsables -->
-                        <h6 class="border-bottom pb-2 mb-3 mt-4"><i class="fas fa-users"></i> Responsables</h6>
-
-                        <div class="form-group">
-                            <label for="rector_id"><strong>Rector</strong></label>
-                            <select name="rector_id" id="rector_id" class="form-control">
-                                <option value="">-- Seleccionar Rector --</option>
-                                {% for usuario in rectores %}
-                                <option value="{{ usuario.id }}" {{ 'selected' if colegio and colegio.rector_id == usuario.id else '' }}>
-                                    {{ usuario.nombre_completo }} ({{ usuario.documento }})
-                                </option>
-                                {% endfor %}
-                            </select>
-                            <small class="form-text text-muted">Solo usuarios con rol RECTOR</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="docente_enlace_id"><strong>Docente Enlace</strong></label>
-                            <select name="docente_enlace_id" id="docente_enlace_id" class="form-control">
-                                <option value="">-- Seleccionar Docente Enlace --</option>
-                                {% for usuario in docentes %}
-                                <option value="{{ usuario.id }}" {{ 'selected' if colegio and colegio.docente_enlace_id == usuario.id else '' }}>
-                                    {{ usuario.nombre_completo }} ({{ usuario.documento }})
-                                </option>
-                                {% endfor %}
-                            </select>
-                            <small class="form-text text-muted">Solo usuarios con rol DOCENTE</small>
-                        </div>
-
-                        <!-- Estado (solo para edicion) -->
-                        {% if colegio %}
-                        <h6 class="border-bottom pb-2 mb-3 mt-4"><i class="fas fa-toggle-on"></i> Estado</h6>
-
-                        <div class="form-group">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" name="activo" class="custom-control-input" id="activo"
-                                       {{ 'checked' if colegio.activo else '' }}>
-                                <label class="custom-control-label" for="activo">Colegio Activo</label>
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        <!-- Botones -->
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ url_for('admin.colegios') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Cancelar
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Guardar Colegio
-                            </button>
-                        </div>
-                    </form>
+                <div>
+                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-envelope text-sena-green mr-1"></i> Email
+                    </label>
+                    <input type="email"
+                           name="email"
+                           id="email"
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50"
+                           value="{{ colegio.email if colegio else '' }}"
+                           placeholder="correo@colegio.edu.co">
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<style>
-/* Breadcrumb */
-.breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1rem;
-    list-style: none;
-    background-color: #f8f9fa;
-    border-radius: 0.25rem;
-}
+    <!-- Sección: Responsables -->
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-sena-green-dark to-sena-green px-6 py-4 flex items-center">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                <i class="fas fa-users text-white text-lg"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Responsables</h3>
+        </div>
+        <div class="p-6 space-y-6">
+            <div>
+                <label for="rector_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-user-tie text-sena-green mr-1"></i> Rector
+                </label>
+                <select name="rector_id" id="rector_id" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50">
+                    <option value="">-- Seleccionar Rector --</option>
+                    {% for usuario in rectores %}
+                    <option value="{{ usuario.id }}" {{ 'selected' if colegio and colegio.rector_id == usuario.id else '' }}>
+                        {{ usuario.nombre_completo }} ({{ usuario.documento }})
+                    </option>
+                    {% endfor %}
+                </select>
+                <small class="text-sm text-gray-500 mt-1 flex items-center">
+                    <i class="fas fa-info-circle mr-1"></i> Solo usuarios con rol RECTOR
+                </small>
+            </div>
 
-.breadcrumb-item {
-    display: inline-block;
-}
+            <div>
+                <label for="docente_enlace_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                    <i class="fas fa-chalkboard-teacher text-sena-green mr-1"></i> Docente Enlace
+                </label>
+                <select name="docente_enlace_id" id="docente_enlace_id" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-sena-green focus:border-sena-green transition-all duration-200 outline-none bg-gray-50">
+                    <option value="">-- Seleccionar Docente Enlace --</option>
+                    {% for usuario in docentes %}
+                    <option value="{{ usuario.id }}" {{ 'selected' if colegio and colegio.docente_enlace_id == usuario.id else '' }}>
+                        {{ usuario.nombre_completo }} ({{ usuario.documento }})
+                    </option>
+                    {% endfor %}
+                </select>
+                <small class="text-sm text-gray-500 mt-1 flex items-center">
+                    <i class="fas fa-info-circle mr-1"></i> Solo usuarios con rol DOCENTE
+                </small>
+            </div>
+        </div>
+    </div>
 
-.breadcrumb-item + .breadcrumb-item::before {
-    display: inline-block;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-    color: #6c757d;
-    content: "/";
-}
+    <!-- Sección: Estado (solo para edición) -->
+    {% if colegio %}
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-sena-green-darker to-sena-green-dark px-6 py-4 flex items-center">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                <i class="fas fa-toggle-on text-white text-lg"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Estado</h3>
+        </div>
+        <div class="p-6">
+            <label for="activo" class="block text-sm font-semibold text-gray-700 mb-2">
+                <i class="fas fa-power-off text-sena-green mr-1"></i> Estado del Colegio
+            </label>
+            <div class="flex items-center space-x-3 bg-gray-50 p-4 rounded-xl border-2 border-gray-200">
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox"
+                           name="activo"
+                           id="activo"
+                           class="sr-only peer"
+                           {{ 'checked' if colegio.activo else '' }}>
+                    <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sena-green/30 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-sena-green"></div>
+                </label>
+                <span class="text-sm font-medium text-gray-700">
+                    Colegio {{ 'Activo' if colegio.activo else 'Inactivo' }}
+                </span>
+            </div>
+            <small class="text-sm text-gray-500 mt-2 flex items-center">
+                <i class="fas fa-info-circle mr-1"></i> Los colegios inactivos no aparecerán en las listas de selección
+            </small>
+        </div>
+    </div>
+    {% endif %}
 
-.breadcrumb-item.active {
-    color: #6c757d;
-}
+    <!-- Botones de Acción -->
+    <div class="flex items-center justify-end gap-4 p-6 bg-gray-50 rounded-2xl border-2 border-gray-200">
+        <a href="{{ url_for('admin.colegios') }}" class="inline-flex items-center px-6 py-3 bg-white border-2 border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm">
+            <i class="fas fa-times mr-2"></i>
+            Cancelar
+        </a>
+        <button type="submit" class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-sena-green to-sena-green-dark hover:from-sena-green-dark hover:to-sena-green-darker text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            <i class="fas fa-save mr-2"></i>
+            Guardar Colegio
+        </button>
+    </div>
+</form>
 
-.breadcrumb-item a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.breadcrumb-item a:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-/* Form styling */
-h6 {
-    font-weight: 600;
-    color: #2d3748;
-}
-
-.custom-switch {
-    padding-left: 2.5rem;
-}
-
-.custom-control-label {
-    font-weight: 500;
-}
-</style>
 {% endblock %}
