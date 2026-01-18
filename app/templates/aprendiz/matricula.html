@@ -6,96 +6,96 @@
 
 {% block content %}
 <!-- Modern Matricula Header -->
-<div class="matricula-header-apr">
-    <div class="header-content-mat">
-        <div class="header-text-mat">
-            <h1 class="header-title-mat">Completar Matrícula</h1>
-            <p class="header-subtitle-mat">Completa tu información para continuar con el proceso</p>
+<div class="matricula-header-apr rounded-xl md:rounded-2xl p-4 md:p-8 mb-4 md:mb-8">
+    <div class="header-content-mat flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="header-text-mat text-center md:text-left">
+            <h1 class="header-title-mat text-2xl md:text-3xl lg:text-4xl">Completar Matrícula</h1>
+            <p class="header-subtitle-mat text-sm md:text-base lg:text-lg">Completa tu información para continuar con el proceso</p>
         </div>
-        <div class="header-icon-mat">
+        <div class="header-icon-mat text-4xl md:text-5xl lg:text-6xl">
             <i class="fas fa-clipboard-list"></i>
         </div>
     </div>
 </div>
 
 <!-- Progress Timeline - Horizontal -->
-<div class="progress-timeline-apr">
-    <div class="timeline-step-apr {% if matricula.estado in ['BORRADOR', 'ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %} {% if matricula.estado in ['ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}completed{% endif %}">
-        <div class="step-icon-apr">
+<div class="progress-timeline-apr flex flex-col lg:flex-row items-start lg:items-center gap-2 lg:gap-0 mb-4 md:mb-8 overflow-x-auto pb-4">
+    <div class="timeline-step-apr flex items-start lg:items-center gap-3 lg:gap-4 w-full lg:w-auto {% if matricula.estado in ['BORRADOR', 'ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %} {% if matricula.estado in ['ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}completed{% endif %}">
+        <div class="step-icon-apr w-10 h-10 md:w-12 md:h-12 text-lg md:text-xl flex-shrink-0">
             <i class="fas fa-user-check"></i>
         </div>
-        <div class="step-content-apr">
-            <div class="step-title-apr">Datos Personales</div>
-            <div class="step-subtitle-apr">Completa tu información</div>
+        <div class="step-content-apr flex-1">
+            <div class="step-title-apr text-sm md:text-base font-bold">Datos Personales</div>
+            <div class="step-subtitle-apr text-xs md:text-sm">Completa tu información</div>
             {% if matricula.estado in ['ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}
-            <span class="step-status-apr status-completed-apr">✓ Completado</span>
+            <span class="step-status-apr status-completed-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">✓ Completado</span>
             {% else %}
-            <span class="step-status-apr status-pending-apr">Pendiente</span>
+            <span class="step-status-apr status-pending-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">Pendiente</span>
             {% endif %}
         </div>
     </div>
 
-    <div class="timeline-connector-apr {% if matricula.estado in ['ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %}"></div>
+    <div class="timeline-connector-apr hidden lg:block {% if matricula.estado in ['ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %}"></div>
 
     {% set docs_requeridos = 5 if (current_user.tipo_documento == 'CC' and current_user.es_mayor_de_edad) else 8 %}
     {% set documentos_count = matricula.documentos|length if matricula else 0 %}
-    <div class="timeline-step-apr {% if documentos_count >= docs_requeridos %}active completed{% endif %}">
-        <div class="step-icon-apr">
+    <div class="timeline-step-apr flex items-start lg:items-center gap-3 lg:gap-4 w-full lg:w-auto {% if documentos_count >= docs_requeridos %}active completed{% endif %}">
+        <div class="step-icon-apr w-10 h-10 md:w-12 md:h-12 text-lg md:text-xl flex-shrink-0">
             <i class="fas fa-file-upload"></i>
         </div>
-        <div class="step-content-apr">
-            <div class="step-title-apr">Cargar Documentos</div>
-            <div class="step-subtitle-apr">Sube los {{ docs_requeridos }} documentos</div>
+        <div class="step-content-apr flex-1">
+            <div class="step-title-apr text-sm md:text-base font-bold">Cargar Documentos</div>
+            <div class="step-subtitle-apr text-xs md:text-sm">Sube los {{ docs_requeridos }} documentos</div>
             {% if documentos_count >= docs_requeridos %}
-            <span class="step-status-apr status-completed-apr">✓ {{ documentos_count }}/{{ docs_requeridos }} documentos</span>
+            <span class="step-status-apr status-completed-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">✓ {{ documentos_count }}/{{ docs_requeridos }} documentos</span>
             {% else %}
-            <span class="step-status-apr status-progress-apr">{{ documentos_count }}/{{ docs_requeridos }} documentos</span>
+            <span class="step-status-apr status-progress-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">{{ documentos_count }}/{{ docs_requeridos }} documentos</span>
             {% endif %}
         </div>
     </div>
 
-    <div class="timeline-connector-apr {% if matricula.estado in ['ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %}"></div>
+    <div class="timeline-connector-apr hidden lg:block {% if matricula.estado in ['ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %}"></div>
 
-    <div class="timeline-step-apr {% if matricula.estado in ['ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %} {% if matricula.estado in ['PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}completed{% endif %}">
-        <div class="step-icon-apr">
+    <div class="timeline-step-apr flex items-start lg:items-center gap-3 lg:gap-4 w-full lg:w-auto {% if matricula.estado in ['ENVIADO', 'PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %} {% if matricula.estado in ['PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}completed{% endif %}">
+        <div class="step-icon-apr w-10 h-10 md:w-12 md:h-12 text-lg md:text-xl flex-shrink-0">
             <i class="fas fa-paper-plane"></i>
         </div>
-        <div class="step-content-apr">
-            <div class="step-title-apr">Enviar Matrícula</div>
-            <div class="step-subtitle-apr">Envía para revisión</div>
+        <div class="step-content-apr flex-1">
+            <div class="step-title-apr text-sm md:text-base font-bold">Enviar Matrícula</div>
+            <div class="step-subtitle-apr text-xs md:text-sm">Envía para revisión</div>
             {% if matricula.estado in ['PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}
-            <span class="step-status-apr status-completed-apr">✓ Enviado</span>
+            <span class="step-status-apr status-completed-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">✓ Enviado</span>
             {% elif matricula.estado == 'ENVIADO' %}
-            <span class="step-status-apr status-pending-apr">⏳ Pendiente</span>
+            <span class="step-status-apr status-pending-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">⏳ Pendiente</span>
             {% else %}
-            <span class="step-status-apr status-pending-apr">Pendiente</span>
+            <span class="step-status-apr status-pending-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">Pendiente</span>
             {% endif %}
         </div>
     </div>
 
-    <div class="timeline-connector-apr {% if matricula.estado in ['PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %}"></div>
+    <div class="timeline-connector-apr hidden lg:block {% if matricula.estado in ['PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %}"></div>
 
-    <div class="timeline-step-apr {% if matricula.estado in ['PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %} {% if matricula.estado in ['COMPLETO', 'PREMATRICULA'] %}completed{% endif %}">
-        <div class="step-icon-apr">
+    <div class="timeline-step-apr flex items-start lg:items-center gap-3 lg:gap-4 w-full lg:w-auto {% if matricula.estado in ['PENDIENTE', 'COMPLETO', 'PREMATRICULA'] %}active{% endif %} {% if matricula.estado in ['COMPLETO', 'PREMATRICULA'] %}completed{% endif %}">
+        <div class="step-icon-apr w-10 h-10 md:w-12 md:h-12 text-lg md:text-xl flex-shrink-0">
             <i class="fas fa-user-tie"></i>
         </div>
-        <div class="step-content-apr">
-            <div class="step-title-apr">Revisión Docente</div>
-            <div class="step-subtitle-apr">El docente revisa</div>
+        <div class="step-content-apr flex-1">
+            <div class="step-title-apr text-sm md:text-base font-bold">Revisión Docente</div>
+            <div class="step-subtitle-apr text-xs md:text-sm">El docente revisa</div>
             {% if matricula.estado in ['COMPLETO', 'PREMATRICULA'] %}
-            <span class="step-status-apr status-completed-apr">✓ Aprobado</span>
+            <span class="step-status-apr status-completed-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">✓ Aprobado</span>
             {% elif matricula.estado == 'PENDIENTE' %}
-            <span class="step-status-apr status-waiting-apr">⏳ Esperando</span>
+            <span class="step-status-apr status-waiting-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">⏳ Esperando</span>
             {% else %}
-            <span class="step-status-apr status-pending-apr">Esperando</span>
+            <span class="step-status-apr status-pending-apr text-xs md:text-sm px-2 py-0.5 md:px-3 md:py-1">Esperando</span>
             {% endif %}
         </div>
     </div>
 
-    <div class="timeline-connector-apr {% if matricula.estado in ['COMPLETO', 'PREMATRICULA'] %}active{% endif %}"></div>
+    <div class="timeline-connector-apr hidden lg:block {% if matricula.estado in ['COMPLETO', 'PREMATRICULA'] %}active{% endif %}"></div>
 
-    <div class="timeline-step-apr {% if matricula.estado in ['COMPLETO', 'PREMATRICULA'] %}active completed{% endif %}">
-        <div class="step-icon-apr">
+    <div class="timeline-step-apr flex items-start lg:items-center gap-3 lg:gap-4 w-full lg:w-auto {% if matricula.estado in ['COMPLETO', 'PREMATRICULA'] %}active completed{% endif %}">
+        <div class="step-icon-apr w-10 h-10 md:w-12 md:h-12 text-lg md:text-xl flex-shrink-0">
             <i class="fas fa-star"></i>
         </div>
         <div class="step-content-apr">
@@ -111,13 +111,13 @@
 </div>
 
 <!-- Info Alert -->
-<div class="info-alert-mat">
-    <div class="alert-icon-mat">
+<div class="info-alert-mat rounded-xl md:rounded-2xl p-4 md:p-6 mb-4 md:mb-8 flex items-start gap-3 md:gap-4">
+    <div class="alert-icon-mat w-10 h-10 md:w-12 md:h-12 flex-shrink-0 text-xl md:text-2xl">
         <i class="fas fa-info-circle"></i>
     </div>
-    <div class="alert-content-mat">
-        <h4 class="alert-title-mat">Información Importante</h4>
-        <p class="alert-text-mat">
+    <div class="alert-content-mat flex-1">
+        <h4 class="alert-title-mat text-base md:text-lg font-bold mb-1 md:mb-2">Información Importante</h4>
+        <p class="alert-text-mat text-xs md:text-sm">
             Completa todos los datos requeridos para continuar con el proceso de matrícula.
             Esta información es necesaria para tu formación en el SENA.
         </p>
@@ -125,66 +125,66 @@
 </div>
 
 <!-- Formulario de Matrícula -->
-<form method="POST" action="{{ url_for('aprendiz.guardar_matricula') }}" id="matriculaForm" class="matricula-form-apr">
+<form method="POST" action="{{ url_for('aprendiz.guardar_matricula') }}" id="matriculaForm" class="matricula-form-apr space-y-4 md:space-y-6">
 
     <!-- Datos Personales -->
-    <div class="form-card-mat">
-        <div class="card-header-mat card-readonly-mat">
-            <div class="header-icon-wrapper-mat">
+    <div class="form-card-mat rounded-xl md:rounded-2xl overflow-hidden">
+        <div class="card-header-mat card-readonly-mat p-4 md:p-6 flex items-center gap-3 md:gap-4">
+            <div class="header-icon-wrapper-mat w-10 h-10 md:w-12 md:h-12 text-lg md:text-xl">
                 <i class="fas fa-user"></i>
             </div>
             <div class="header-title-wrapper-mat">
-                <h3 class="card-title-mat">Datos Personales</h3>
-                <p class="card-subtitle-mat">Información de solo lectura</p>
+                <h3 class="card-title-mat text-lg md:text-xl font-bold">Datos Personales</h3>
+                <p class="card-subtitle-mat text-xs md:text-sm">Información de solo lectura</p>
             </div>
         </div>
-        <div class="card-body-mat">
-            <div class="form-grid-mat">
+        <div class="card-body-mat p-4 md:p-6">
+            <div class="form-grid-mat grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div class="form-group-mat">
-                    <label class="form-label-mat">
+                    <label class="form-label-mat text-xs md:text-sm mb-1 md:mb-2 flex items-center gap-2">
                         <i class="fas fa-id-card"></i> Nombres
                     </label>
-                    <input type="text" class="form-input-mat input-readonly-mat"
+                    <input type="text" class="form-input-mat input-readonly-mat w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base"
                            value="{{ aprendiz.usuario.nombres }}" readonly>
                 </div>
 
                 <div class="form-group-mat">
-                    <label class="form-label-mat">
+                    <label class="form-label-mat text-xs md:text-sm mb-1 md:mb-2 flex items-center gap-2">
                         <i class="fas fa-id-card"></i> Apellidos
                     </label>
-                    <input type="text" class="form-input-mat input-readonly-mat"
+                    <input type="text" class="form-input-mat input-readonly-mat w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base"
                            value="{{ aprendiz.usuario.apellidos }}" readonly>
                 </div>
 
                 <div class="form-group-mat">
-                    <label class="form-label-mat">
+                    <label class="form-label-mat text-xs md:text-sm mb-1 md:mb-2 flex items-center gap-2">
                         <i class="fas fa-fingerprint"></i> Tipo Documento
                     </label>
-                    <input type="text" class="form-input-mat input-readonly-mat"
+                    <input type="text" class="form-input-mat input-readonly-mat w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base"
                            value="{{ aprendiz.usuario.tipo_documento }}" readonly>
                 </div>
 
                 <div class="form-group-mat">
-                    <label class="form-label-mat">
+                    <label class="form-label-mat text-xs md:text-sm mb-1 md:mb-2 flex items-center gap-2">
                         <i class="fas fa-fingerprint"></i> Documento
                     </label>
-                    <input type="text" class="form-input-mat input-readonly-mat"
+                    <input type="text" class="form-input-mat input-readonly-mat w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base"
                            value="{{ aprendiz.usuario.documento }}" readonly>
                 </div>
 
                 <div class="form-group-mat">
-                    <label class="form-label-mat">
+                    <label class="form-label-mat text-xs md:text-sm mb-1 md:mb-2 flex items-center gap-2">
                         <i class="fas fa-phone"></i> Teléfono
                     </label>
-                    <input type="text" class="form-input-mat input-readonly-mat"
+                    <input type="text" class="form-input-mat input-readonly-mat w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base"
                            value="{{ aprendiz.usuario.telefono }}" readonly>
                 </div>
 
                 <div class="form-group-mat">
-                    <label class="form-label-mat">
+                    <label class="form-label-mat text-xs md:text-sm mb-1 md:mb-2 flex items-center gap-2">
                         <i class="fas fa-envelope"></i> Email
                     </label>
-                    <input type="email" class="form-input-mat input-readonly-mat"
+                    <input type="email" class="form-input-mat input-readonly-mat w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base"
                            value="{{ aprendiz.usuario.email }}" readonly>
                 </div>
             </div>
@@ -192,9 +192,9 @@
     </div>
 
     <!-- Datos del Acudiente -->
-    <div class="form-card-mat">
-        <div class="card-header-mat card-info-mat">
-            <div class="header-icon-wrapper-mat">
+    <div class="form-card-mat rounded-xl md:rounded-2xl overflow-hidden">
+        <div class="card-header-mat card-info-mat p-4 md:p-6 flex items-center gap-3 md:gap-4">
+            <div class="header-icon-wrapper-mat w-10 h-10 md:w-12 md:h-12 text-lg md:text-xl">
                 <i class="fas fa-user-friends"></i>
             </div>
             <div class="header-title-wrapper-mat">

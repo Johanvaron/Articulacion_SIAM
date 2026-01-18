@@ -18,9 +18,17 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
     <div class="aprendiz-layout">
         <!-- Sidebar -->
-        <aside class="aprendiz-sidebar">
+        <aside class="aprendiz-sidebar" id="aprendizSidebar">
             <div class="aprendiz-sidebar-header">
                 <div class="sena-logo-sidebar" style="text-align: center; margin-bottom: 1rem;">
                     <img src="{{ url_for('static', filename='img/sena.png') }}" alt="Logo SENA" style="max-width: 80px; height: auto;">
@@ -122,6 +130,37 @@
         const spinner = document.getElementById('spinner2');
         if (spinner) spinner.classList.remove('active');
     }
+    
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('aprendizSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const menuLinks = sidebar.querySelectorAll('a');
+        
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+        
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+        
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', toggleSidebar);
+        }
+        
+        if (overlay) {
+            overlay.addEventListener('click', closeSidebar);
+        }
+        
+        // Close sidebar when clicking on menu links
+        menuLinks.forEach(link => {
+            link.addEventListener('click', closeSidebar);
+        });
+    });
     </script>
 
     {% block scripts %}{% endblock %}

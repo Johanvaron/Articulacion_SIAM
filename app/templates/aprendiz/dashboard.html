@@ -1,310 +1,273 @@
-{% extends "aprendiz/base_aprendiz.html" %}
+{% extends 'aprendiz/base_aprendiz.html' %}
 
-{% block title %}Dashboard - Aprendiz{% endblock %}
-
-{% block page_title %}Mi Dashboard{% endblock %}
+{% block title %}Panel del Aprendiz - {{ current_user.nombres }}{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Header de Bienvenida -->
-    <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-            <h1 class="text-3xl lg:text-4xl font-bold text-gray-900">
-                Hola, {{ current_user.nombres }} 👋
-            </h1>
-            <p class="text-gray-600 mt-2">Este es el estado actual de tu proceso de matrícula</p>
+{% set docs_requeridos = 5 if (current_user.tipo_documento == 'CC' and current_user.edad >= 18) else 8 %}
+<div class="dashboard-modern">
+    <!-- Sección de Bienvenida -->
+    <div class="welcome-section">
+        <div class="welcome-header">
+            <h1 class="welcome-title">¡Bienvenido, {{ current_user.nombres }}! 👋</h1>
+            <p class="welcome-subtitle">
+                {% if matricula and matricula.estado == 'COMPLETADO' %}
+                    Tu proceso de articulación está completo
+                {% elif matricula and matricula.estado == 'ENVIADO' %}
+                    Tu solicitud de matrícula está en revisión
+                {% else %}
+                    Completa tu proceso de articulación SENA
+                {% endif %}
+            </p>
         </div>
-        {% if matricula %}
-        <a href="{{ url_for('aprendiz.descargar_resumen') }}" 
-           class="inline-flex items-center space-x-2 bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+        {% if matricula and matricula.estado == 'COMPLETADO' %}
+        <a href="{{ url_for('aprendiz.descargar_reporte_pdf') }}" class="btn-download">
             <i class="fas fa-file-pdf"></i>
-            <span>Descargar Reporte PDF</span>
+            Descargar PDF
         </a>
         {% endif %}
     </div>
 
     <!-- Alerta Documento Desactualizado -->
-    {% if current_user.tiene_documento_desactualizado %}
-    <div class="mb-8 bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-xl shadow-md">
-        <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-                <i class="fas fa-exclamation-triangle text-yellow-600 text-3xl"></i>
-            </div>
-            <div class="flex-1">
-                <h3 class="text-lg font-bold text-yellow-900 mb-2">
-                    ⚠️ Documento de Identidad Desactualizado
-                </h3>
-                <p class="text-yellow-800 mb-2">
-                    Tienes <strong>{{ current_user.edad }} años</strong> pero aún tienes <strong>Tarjeta de Identidad (TI)</strong>.
-                    Debes actualizar tu documento a <strong>Cédula de Ciudadanía (CC)</strong> en la Registraduría Nacional.
-                </p>
-                <p class="text-yellow-800 flex items-center space-x-2">
-                    <i class="fas fa-ban"></i>
-                    <span>La subida de documentos está deshabilitada hasta que actualices tu tipo de documento.</span>
-                </p>
-            </div>
+    {% if current_user.tipo_documento == 'TI' %}
+    <div class="alert-documento-desactualizado">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div class="alert-content">
+            <strong>Documento desactualizado:</strong>
+            Tu Tarjeta de Identidad (TI) debe ser actualizada a Cédula de Ciudadanía (CC). 
+            Por favor, contacta al administrador para actualizar tu información.
         </div>
     </div>
     {% endif %}
 
     <!-- Métricas Principales -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="metrics-grid">
         <!-- Estado de Matrícula -->
-        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl p-6 text-white transform hover:scale-105 transition-all duration-300">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center">
-                    <i class="fas fa-clipboard-list text-2xl"></i>
-                </div>
-                {% if matricula and matricula.estado == 'PREMATRICULA' %}
-                <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    <i class="fas fa-check-circle"></i> Aprobado
-                </span>
-                {% elif matricula and matricula.estado in ['ENVIADO', 'PENDIENTE'] %}
-                <span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    <i class="fas fa-clock"></i> En revisión
-                </span>
-                {% else %}
-                <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    <i class="fas fa-hourglass-half"></i> Acción requerida
-                </span>
-                {% endif %}
+        <div class="metric-card metric-primary">
+            <div class="metric-icon">
+                <i class="fas fa-clipboard-check"></i>
             </div>
-            <div class="text-3xl font-bold mb-2">
-                {% if matricula %}{{ matricula.estado }}{% else %}PENDIENTE{% endif %}
+            <div class="metric-content">
+                <h3 class="metric-label">Estado de Matrícula</h3>
+                <p class="metric-value">
+                    {% if matricula %}
+                        {% if matricula.estado == 'BORRADOR' %}
+                            BORRADOR
+                        {% elif matricula.estado == 'ENVIADO' %}
+                            ENVIADO
+                        {% elif matricula.estado == 'COMPLETADO' %}
+                            COMPLETADO
+                        {% else %}
+                            {{ matricula.estado }}
+                        {% endif %}
+                    {% else %}
+                        NO INICIADO
+                    {% endif %}
+                </p>
             </div>
-            <div class="text-white/80">Estado de Matrícula</div>
         </div>
 
-        <!-- Documentos Cargados -->
-        <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-xl p-6 text-white transform hover:scale-105 transition-all duration-300">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center">
-                    <i class="fas fa-folder-open text-2xl"></i>
+        <!-- Documentos Subidos -->
+        <div class="metric-card metric-success">
+            <div class="metric-icon">
+                <i class="fas fa-file-upload"></i>
+            </div>
+            <div class="metric-content">
+                <h3 class="metric-label">Documentos Subidos</h3>
+                <p class="metric-value">
+                    {{ documentos_subidos }} de {{ docs_requeridos }}
+                </p>
+                <div class="metric-progress">
+                    <div class="metric-progress-bar" style="width: {{ (documentos_subidos / docs_requeridos * 100) if docs_requeridos > 0 else 0 }}%"></div>
                 </div>
             </div>
-            {% set docs_requeridos = 5 if (current_user.tipo_documento == 'CC' and current_user.es_mayor_de_edad) else 8 %}
-            {% set progreso_docs = (documentos_subidos / docs_requeridos * 100)|int %}
-            <div class="text-3xl font-bold mb-2">
-                {{ documentos_subidos }}<span class="text-xl opacity-80">/{{ docs_requeridos }}</span>
-            </div>
-            <div class="text-white/80 mb-3">Documentos Cargados</div>
-            <div class="w-full bg-white/20 rounded-full h-2 mb-2">
-                <div class="bg-white rounded-full h-2 transition-all duration-500" style="width: {{ progreso_docs }}%"></div>
-            </div>
-            <div class="text-sm text-white/90">{{ progreso_docs }}% completo</div>
         </div>
 
         <!-- Programa Técnico -->
-        <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-xl p-6 text-white transform hover:scale-105 transition-all duration-300">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center">
-                    <i class="fas fa-graduation-cap text-2xl"></i>
-                </div>
+        <div class="metric-card metric-info">
+            <div class="metric-icon">
+                <i class="fas fa-graduation-cap"></i>
             </div>
-            <div class="text-2xl font-bold mb-2">
-                {% if aprendiz.programa %}
-                    {{ aprendiz.programa.codigo }}
-                {% else %}
-                    Sin asignar
-                {% endif %}
+            <div class="metric-content">
+                <h3 class="metric-label">Programa Técnico</h3>
+                <p class="metric-value">
+                    {% if aprendiz.programa %}
+                        {{ aprendiz.programa.nombre }}
+                    {% else %}
+                        Sin asignar
+                    {% endif %}
+                </p>
             </div>
-            <div class="text-white/80">Programa Técnico</div>
-            {% if aprendiz.programa %}
-            <div class="mt-3 text-sm text-white/90">
-                {{ aprendiz.programa.nombre }}
-            </div>
-            {% endif %}
         </div>
     </div>
 
-    <!-- Timeline de Progreso -->
-    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
-        <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center space-x-2">
-            <i class="fas fa-route text-sena-green"></i>
-            <span>Progreso de tu Matrícula</span>
-        </h3>
-        
-        <div class="relative">
-            <!-- Línea de Progreso -->
-            <div class="absolute left-8 top-0 bottom-0 w-1 bg-gray-200"></div>
-            
-            <!-- Pasos -->
-            <div class="space-y-8">
-                <!-- Paso 1: Registro -->
-                <div class="relative flex items-start space-x-4">
-                    <div class="flex-shrink-0 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg z-10">
-                        <i class="fas fa-check text-2xl"></i>
-                    </div>
-                    <div class="flex-1 bg-green-50 p-4 rounded-xl border border-green-200">
-                        <h4 class="font-bold text-green-900 mb-1">Registro Completado</h4>
-                        <p class="text-green-700 text-sm">Has creado tu cuenta exitosamente</p>
-                    </div>
+    <!-- Línea de Tiempo del Proceso -->
+    <div class="progress-timeline">
+        <h2 class="section-title">Progreso del Proceso</h2>
+        <div class="timeline-horizontal">
+            <!-- Paso 1: Completa tu información -->
+            <div class="timeline-step {% if not aprendiz.perfil_completo %}active{% elif aprendiz.perfil_completo %}completed{% endif %}">
+                <div class="timeline-icon">
+                    <i class="fas {% if aprendiz.perfil_completo %}fa-check{% else %}fa-user-edit{% endif %}"></i>
                 </div>
-
-                <!-- Paso 2: Matrícula -->
-                <div class="relative flex items-start space-x-4">
-                    {% if matricula and matricula.estado in ['PREMATRICULA', 'ENVIADO'] %}
-                    <div class="flex-shrink-0 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg z-10">
-                        <i class="fas fa-check text-2xl"></i>
-                    </div>
-                    <div class="flex-1 bg-green-50 p-4 rounded-xl border border-green-200">
-                        <h4 class="font-bold text-green-900 mb-1">Matrícula Completada</h4>
-                        <p class="text-green-700 text-sm">Has diligenciado tu información de matrícula</p>
-                    </div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Completa tu información</h4>
+                    <p class="timeline-subtitle">Datos personales y académicos</p>
+                    {% if aprendiz.perfil_completo %}
+                        <span class="timeline-badge badge-completed">Completado</span>
                     {% else %}
-                    <div class="flex-shrink-0 w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center text-white shadow-lg z-10 animate-pulse">
-                        <i class="fas fa-edit text-2xl"></i>
-                    </div>
-                    <div class="flex-1 bg-yellow-50 p-4 rounded-xl border border-yellow-200">
-                        <h4 class="font-bold text-yellow-900 mb-1">Completa tu Matrícula</h4>
-                        <p class="text-yellow-700 text-sm mb-3">Ingresa tu información básica y académica</p>
-                        <a href="{{ url_for('aprendiz.matricula') }}" 
-                           class="inline-flex items-center space-x-2 bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-all">
-                            <i class="fas fa-arrow-right"></i>
-                            <span>Ir a Matrícula</span>
-                        </a>
-                    </div>
+                        <span class="timeline-badge badge-pending">Pendiente</span>
                     {% endif %}
                 </div>
+                <div class="timeline-connector"></div>
+            </div>
 
-                <!-- Paso 3: Documentos -->
-                <div class="relative flex items-start space-x-4">
-                    {% if documentos_subidos >= docs_requeridos %}
-                    <div class="flex-shrink-0 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg z-10">
-                        <i class="fas fa-check text-2xl"></i>
-                    </div>
-                    <div class="flex-1 bg-green-50 p-4 rounded-xl border border-green-200">
-                        <h4 class="font-bold text-green-900 mb-1">Documentos Completos</h4>
-                        <p class="text-green-700 text-sm">Todos los documentos han sido cargados</p>
-                    </div>
-                    {% elif documentos_subidos > 0 %}
-                    <div class="flex-shrink-0 w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg z-10">
-                        <i class="fas fa-file-upload text-2xl"></i>
-                    </div>
-                    <div class="flex-1 bg-blue-50 p-4 rounded-xl border border-blue-200">
-                        <h4 class="font-bold text-blue-900 mb-1">Documentos en Progreso</h4>
-                        <p class="text-blue-700 text-sm mb-3">Has cargado {{ documentos_subidos }} de {{ docs_requeridos }} documentos</p>
-                        <a href="{{ url_for('aprendiz.documentos') }}" 
-                           class="inline-flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
-                            <i class="fas fa-arrow-right"></i>
-                            <span>Subir Documentos</span>
-                        </a>
-                    </div>
+            <!-- Paso 2: Sube tus documentos -->
+            <div class="timeline-step {% if matricula and documentos_subidos > 0 and matricula.estado == 'BORRADOR' %}active{% elif matricula and matricula.estado not in ['BORRADOR', None] %}completed{% endif %}">
+                <div class="timeline-icon">
+                    <i class="fas {% if matricula and matricula.estado not in ['BORRADOR', None] %}fa-check{% else %}fa-file-upload{% endif %}"></i>
+                </div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Sube tus documentos</h4>
+                    <p class="timeline-subtitle">Documentación requerida</p>
+                    {% if matricula and matricula.estado == 'ENVIADO' %}
+                        <span class="timeline-badge badge-completed">Completado</span>
+                    {% elif matricula and matricula.estado == 'BORRADOR' %}
+                        <span class="timeline-badge badge-pending">En progreso</span>
                     {% else %}
-                    <div class="flex-shrink-0 w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-white shadow-lg z-10">
-                        <i class="fas fa-file-upload text-2xl"></i>
-                    </div>
-                    <div class="flex-1 bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <h4 class="font-bold text-gray-900 mb-1">Sube tus Documentos</h4>
-                        <p class="text-gray-700 text-sm mb-3">Necesitas subir {{ docs_requeridos }} documentos</p>
-                        {% if not current_user.tiene_documento_desactualizado %}
-                        <a href="{{ url_for('aprendiz.documentos') }}" 
-                           class="inline-flex items-center space-x-2 bg-sena-green text-white px-4 py-2 rounded-lg hover:bg-sena-green-dark transition-all">
-                            <i class="fas fa-arrow-right"></i>
-                            <span>Ir a Documentos</span>
-                        </a>
+                        <span class="timeline-badge badge-inactive">Por hacer</span>
+                    {% endif %}
+                </div>
+                <div class="timeline-connector"></div>
+            </div>
+
+            <!-- Paso 3: Revisión Docente -->
+            <div class="timeline-step {% if matricula and matricula.estado == 'ENVIADO' and not matricula.validado_por_docente %}active{% elif matricula and matricula.validado_por_docente %}completed{% endif %}">
+                <div class="timeline-icon">
+                    <i class="fas {% if matricula and matricula.validado_por_docente %}fa-check{% else %}fa-chalkboard-teacher{% endif %}"></i>
+                </div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Revisión Docente</h4>
+                    <p class="timeline-subtitle">Validación del profesor</p>
+                    {% if matricula and matricula.validado_por_docente %}
+                        <span class="timeline-badge badge-completed">Validado</span>
+                    {% elif matricula and matricula.estado == 'ENVIADO' %}
+                        <span class="timeline-badge badge-active">En revisión</span>
+                    {% else %}
+                        <span class="timeline-badge badge-inactive">Por hacer</span>
+                    {% endif %}
+                </div>
+                <div class="timeline-connector"></div>
+            </div>
+
+            <!-- Paso 4: Revisión Admin -->
+            <div class="timeline-step {% if matricula and matricula.validado_por_docente and not matricula.validado_por_admin %}active{% elif matricula and matricula.estado == 'COMPLETADO' %}completed{% endif %}">
+                <div class="timeline-icon">
+                    <i class="fas {% if matricula and matricula.estado == 'COMPLETADO' %}fa-check{% else %}fa-user-shield{% endif %}"></i>
+                </div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Revisión Final</h4>
+                    <p class="timeline-subtitle">Aprobación administrativa</p>
+                    {% if matricula and matricula.estado == 'COMPLETADO' %}
+                        <span class="timeline-badge badge-completed">Aprobado</span>
+                    {% elif matricula and matricula.validado_por_docente %}
+                        <span class="timeline-badge badge-active">En revisión</span>
+                    {% else %}
+                        <span class="timeline-badge badge-inactive">Por hacer</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Acciones Rápidas -->
+    <div class="actions-section">
+        <h2 class="section-title">Acciones Rápidas</h2>
+        <div class="actions-grid">
+            <!-- Completar Datos -->
+            <a href="{{ url_for('aprendiz.perfil') }}" class="action-card {% if aprendiz.perfil_completo %}action-card-success{% endif %}">
+                <div class="action-icon action-icon-primary">
+                    <i class="fas fa-user-edit"></i>
+                </div>
+                <div class="action-content">
+                    <h3 class="action-title">{% if aprendiz.perfil_completo %}Datos Completos{% else %}Completa tus Datos{% endif %}</h3>
+                    <p class="action-description">
+                        {% if aprendiz.perfil_completo %}
+                            Tu perfil está completo
+                        {% else %}
+                            Actualiza tu información personal
                         {% endif %}
-                    </div>
-                    {% endif %}
+                    </p>
                 </div>
+                <div class="action-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
 
-                <!-- Paso 4: Revisión -->
-                <div class="relative flex items-start space-x-4">
-                    {% if matricula and matricula.estado == 'PREMATRICULA' %}
-                    <div class="flex-shrink-0 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg z-10">
-                        <i class="fas fa-check-circle text-2xl"></i>
-                    </div>
-                    <div class="flex-1 bg-green-50 p-4 rounded-xl border border-green-200">
-                        <h4 class="font-bold text-green-900 mb-1">¡Proceso Completado!</h4>
-                        <p class="text-green-700 text-sm">Tu matrícula ha sido aprobada exitosamente</p>
-                    </div>
-                    {% else %}
-                    <div class="flex-shrink-0 w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-white shadow-lg z-10">
-                        <i class="fas fa-clock text-2xl"></i>
-                    </div>
-                    <div class="flex-1 bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <h4 class="font-bold text-gray-900 mb-1">En Espera de Aprobación</h4>
-                        <p class="text-gray-700 text-sm">Completa los pasos anteriores para finalizar</p>
-                    </div>
-                    {% endif %}
+            <!-- Subir Documentos -->
+            <a href="{{ url_for('aprendiz.documentos') }}" class="action-card {% if documentos_subidos == docs_requeridos %}action-card-success{% endif %}">
+                <div class="action-icon action-icon-info">
+                    <i class="fas fa-cloud-upload-alt"></i>
                 </div>
-            </div>
+                <div class="action-content">
+                    <h3 class="action-title">Subir Documentos</h3>
+                    <p class="action-description">{{ documentos_subidos }} de {{ docs_requeridos }} documentos subidos</p>
+                </div>
+                <div class="action-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+
+            <!-- Ver Matrícula -->
+            <a href="{{ url_for('aprendiz.matricula') }}" class="action-card">
+                <div class="action-icon action-icon-success">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="action-content">
+                    <h3 class="action-title">Mi Matrícula</h3>
+                    <p class="action-description">Ver estado de matrícula</p>
+                </div>
+                <div class="action-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
         </div>
     </div>
 
-    <!-- Información Adicional -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Información Personal -->
-        <div class="bg-white rounded-2xl shadow-xl p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center space-x-2">
-                <i class="fas fa-user text-sena-green"></i>
-                <span>Mi Información</span>
-            </h3>
-            <div class="space-y-3">
-                <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                    <span class="text-gray-600">Documento:</span>
-                    <span class="font-semibold">{{ current_user.tipo_documento }} {{ current_user.documento }}</span>
-                </div>
-                <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                    <span class="text-gray-600">Correo:</span>
-                    <span class="font-semibold">{{ current_user.correo }}</span>
-                </div>
-                {% if aprendiz.colegio %}
-                <div class="flex items-center justify-between py-2 border-b border-gray-100">
-                    <span class="text-gray-600">Institución:</span>
-                    <span class="font-semibold">{{ aprendiz.colegio.nombre }}</span>
-                </div>
-                {% endif %}
-                {% if aprendiz.grupo %}
-                <div class="flex items-center justify-between py-2">
-                    <span class="text-gray-600">Grupo:</span>
-                    <span class="font-semibold">{{ aprendiz.grupo.numero }}</span>
-                </div>
+    <!-- Notificaciones y Observaciones -->
+    {% if matricula and (matricula.observaciones_docente or matricula.observaciones_admin) %}
+    <div class="progress-timeline">
+        <h2 class="section-title">Observaciones</h2>
+        
+        {% if matricula.observaciones_docente %}
+        <div class="notification-card notification-info">
+            <div class="notification-icon">
+                <i class="fas fa-comment-dots"></i>
+            </div>
+            <div class="notification-content">
+                <h3 class="notification-title">Observaciones del Docente</h3>
+                <p class="notification-text">{{ matricula.observaciones_docente }}</p>
+                {% if matricula.fecha_validacion_docente %}
+                <span class="notification-date">{{ matricula.fecha_validacion_docente.strftime('%d/%m/%Y %H:%M') }}</span>
                 {% endif %}
             </div>
         </div>
+        {% endif %}
 
-        <!-- Accesos Rápidos -->
-        <div class="bg-white rounded-2xl shadow-xl p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center space-x-2">
-                <i class="fas fa-bolt text-sena-green"></i>
-                <span>Accesos Rápidos</span>
-            </h3>
-            <div class="grid grid-cols-1 gap-3">
-                <a href="{{ url_for('aprendiz.matricula') }}" 
-                   class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-xl hover:shadow-md transition-all group">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white">
-                            <i class="fas fa-edit"></i>
-                        </div>
-                        <span class="font-semibold text-blue-900">Mi Matrícula</span>
-                    </div>
-                    <i class="fas fa-arrow-right text-blue-500 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-                
-                <a href="{{ url_for('aprendiz.documentos') }}" 
-                   class="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-xl hover:shadow-md transition-all group">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center text-white">
-                            <i class="fas fa-file-upload"></i>
-                        </div>
-                        <span class="font-semibold text-green-900">Mis Documentos</span>
-                    </div>
-                    <i class="fas fa-arrow-right text-green-500 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-                
-                <a href="{{ url_for('aprendiz.perfil') }}" 
-                   class="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-xl hover:shadow-md transition-all group">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center text-white">
-                            <i class="fas fa-user-circle"></i>
-                        </div>
-                        <span class="font-semibold text-purple-900">Mi Perfil</span>
-                    </div>
-                    <i class="fas fa-arrow-right text-purple-500 group-hover:translate-x-1 transition-transform"></i>
-                </a>
+        {% if matricula.observaciones_admin %}
+        <div class="notification-card notification-warning">
+            <div class="notification-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="notification-content">
+                <h3 class="notification-title">Observaciones del Administrador</h3>
+                <p class="notification-text">{{ matricula.observaciones_admin }}</p>
+                {% if matricula.fecha_validacion_admin %}
+                <span class="notification-date">{{ matricula.fecha_validacion_admin.strftime('%d/%m/%Y %H:%M') }}</span>
+                {% endif %}
             </div>
         </div>
+        {% endif %}
     </div>
+    {% endif %}
 </div>
 {% endblock %}

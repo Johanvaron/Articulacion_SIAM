@@ -88,7 +88,7 @@
                            placeholder="correo@ejemplo.com">
                 </div>
 
-                <div class="form-group-prof form-full-width-prof">
+                <div class="form-group-prof">
                     <label for="telefono" class="form-label-prof">
                         <i class="fas fa-phone"></i> Teléfono
                     </label>
@@ -205,13 +205,12 @@
             </div>
         </div>
         <div class="card-body-prof">
-            <div class="form-grid-prof">
-                <div class="form-group-prof form-full-width-prof">
+            <div class="form-grid-single-prof">
+                <div class="form-group-prof">
                     <label for="colegio_id" class="form-label-prof">
                         <i class="fas fa-school"></i> Colegio
                     </label>
                     {% if aprendiz.grupo_id %}
-                        <!-- Campo de solo lectura si ya tiene grupo asignado -->
                         <input type="text" class="form-input-prof input-readonly-prof"
                                value="{{ aprendiz.colegio.nombre if aprendiz.colegio else 'Sin asignar' }}" readonly>
                         <input type="hidden" name="colegio_id" value="{{ aprendiz.colegio_id }}">
@@ -230,12 +229,11 @@
                     {% endif %}
                 </div>
 
-                <div class="form-group-prof form-full-width-prof">
+                <div class="form-group-prof">
                     <label for="programa_id" class="form-label-prof">
                         <i class="fas fa-book"></i> Programa
                     </label>
                     {% if aprendiz.grupo_id %}
-                        <!-- Campo de solo lectura si ya tiene grupo asignado -->
                         <input type="text" class="form-input-prof input-readonly-prof"
                                value="{{ aprendiz.programa.nombre if aprendiz.programa else 'Sin asignar' }}" readonly>
                         <input type="hidden" name="programa_id" value="{{ aprendiz.programa_id }}">
@@ -254,12 +252,11 @@
                     {% endif %}
                 </div>
 
-                <div class="form-group-prof form-full-width-prof">
+                <div class="form-group-prof">
                     <label for="grupo_id" class="form-label-prof">
                         <i class="fas fa-users"></i> Grupo/Ficha SENA
                     </label>
                     {% if aprendiz.grupo_id %}
-                        <!-- Campo de solo lectura si ya tiene grupo asignado -->
                         <input type="text" class="form-input-prof" value="{{ aprendiz.grupo.nombre }} - {{ aprendiz.grupo.jornada }}" disabled>
                         <input type="hidden" name="grupo_id" value="{{ aprendiz.grupo_id }}">
                         <small class="form-hint-prof" style="color: #2196F3;">
