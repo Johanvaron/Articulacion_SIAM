@@ -7,34 +7,59 @@
 {% block content %}
 <style>
 :root {
-    --docente-primary: #1976D2;
+    --docente-primary: #39A900;
+    --docente-dark: #2D8700;
+    --docente-darker: #1F5C00;
     --docente-secondary: #424242;
     --docente-success: #2e7d32;
     --docente-warning: #f57c00;
     --docente-danger: #c62828;
-    --docente-info: #0288d1;
+    --docente-info: #39A900;
 }
 
 /* Header */
 .matriculas-header-doc {
-    background: linear-gradient(135deg, var(--docente-primary), #1565C0);
+    background: linear-gradient(135deg, #39A900 0%, #2D8700 100%);
     color: white;
     padding: 2.5rem 2rem;
     border-radius: 15px;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 15px rgba(25, 118, 210, 0.2);
+    box-shadow: 0 10px 30px rgba(57, 169, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.matriculas-header-doc::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    transform: translate(100px, -100px);
 }
 
 .header-content-mat {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
 .header-text-mat h1 {
     margin: 0;
     font-size: 2.5rem;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-text-mat h1 i {
+    font-size: 2.8rem;
 }
 
 .header-text-mat p {
@@ -45,74 +70,54 @@
 
 .header-icon-mat {
     font-size: 4rem;
-    opacity: 0.3;
+    opacity: 0.2;
     animation: float 3s ease-in-out infinite;
 }
 
 /* Stats Grid */
 .stats-grid-mat {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
 .stat-card-mat {
     background: white;
+    padding: 1.75rem;
     border-radius: 12px;
-    padding: 1.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
+    border-left: 4px solid var(--stat-color);
+    transition: all 0.3s ease;
 }
 
 .stat-card-mat:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .stat-icon-wrapper-mat {
     width: 60px;
     height: 60px;
     border-radius: 12px;
+    background: var(--stat-gradient);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 1.75rem;
     flex-shrink: 0;
 }
 
-.stat-total-mat .stat-icon-wrapper-mat {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    color: var(--docente-info);
-}
-
-.stat-enviado-mat .stat-icon-wrapper-mat {
-    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-    color: var(--docente-warning);
-}
-
-.stat-pendiente-mat .stat-icon-wrapper-mat {
-    background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-    color: #c2185b;
-}
-
-.stat-prematricula-mat .stat-icon-wrapper-mat {
-    background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
-    color: #00796b;
-}
-
-.stat-completo-mat .stat-icon-wrapper-mat {
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-    color: var(--docente-success);
-}
-
-.stat-rechazado-mat .stat-icon-wrapper-mat {
-    background: linear-gradient(135deg, #ffebee, #ffcdd2);
-    color: var(--docente-danger);
-}
+.stat-total-mat { --stat-color: #39A900; --stat-gradient: linear-gradient(135deg, #39A900 0%, #2D8700 100%); }
+.stat-enviado-mat { --stat-color: #FFA000; --stat-gradient: linear-gradient(135deg, #FFA000 0%, #FF8C00 100%); }
+.stat-pendiente-mat { --stat-color: #D32F2F; --stat-gradient: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%); }
+.stat-prematricula-mat { --stat-color: #1976D2; --stat-gradient: linear-gradient(135deg, #1976D2 0%, #1565C0 100%); }
+.stat-completo-mat { --stat-color: #39A900; --stat-gradient: linear-gradient(135deg, #39A900 0%, #2D8700 100%); }
+.stat-rechazado-mat { --stat-color: #D32F2F; --stat-gradient: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%); }
 
 .stat-content-mat {
     flex: 1;
@@ -211,13 +216,13 @@
 }
 
 .btn-download-mat {
-    background: linear-gradient(135deg, var(--docente-info), #0277bd);
+    background: linear-gradient(135deg, #39A900, #2D8700);
     color: white;
 }
 
 .btn-download-mat:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(2, 136, 209, 0.3);
+    box-shadow: 0 4px 12px rgba(57, 169, 0, 0.4);
     color: white;
 }
 
@@ -389,7 +394,7 @@
 /* Action Button */
 .btn-view-mat {
     padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, var(--docente-info), #0277bd);
+    background: linear-gradient(135deg, #39A900, #2D8700);
     color: white;
     border: none;
     border-radius: 8px;
@@ -404,7 +409,7 @@
 
 .btn-view-mat:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(2, 136, 209, 0.3);
+    box-shadow: 0 4px 12px rgba(57, 169, 0, 0.3);
     color: white;
 }
 

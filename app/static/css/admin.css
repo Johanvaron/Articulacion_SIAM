@@ -16,6 +16,8 @@ body {
     color: white;
     padding: 0;
     position: fixed;
+    top: 0;
+    left: 0;
     height: 100vh;
     overflow-y: auto;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);

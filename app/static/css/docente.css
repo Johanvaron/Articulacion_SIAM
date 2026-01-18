@@ -19,10 +19,12 @@ body {
 
 .docente-sidebar {
     width: 260px;
-    background: linear-gradient(180deg, #0066cc 0%, #004999 100%);
+    background: linear-gradient(180deg, #39A900 0%, #2D8700 100%);
     color: white;
     padding: 0;
     position: fixed;
+    top: 0;
+    left: 0;
     height: 100vh;
     overflow-y: auto;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
@@ -72,6 +74,7 @@ body {
 .docente-menu li a {
     display: flex;
     align-items: center;
+    align-items: center;
     padding: 0.75rem 1.5rem;
     color: white;
     text-decoration: none;
@@ -95,6 +98,53 @@ body {
     width: 20px;
     text-align: center;
     font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.docente-menu li a:hover i,
+.docente-menu li a.active i {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Overlay para móvil */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: #39A900;
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    transition: all 0.3s;
+}
+
+.mobile-menu-toggle:hover {
+    background: #2D8700;
+    transform: scale(1.05);
+}
+
+.mobile-menu-toggle:active {
+    transform: scale(0.95);
 }
 
 /* ========================================
@@ -167,11 +217,11 @@ body {
    ======================================== */
 
 :root {
-    --docente-primary: #1976D2;
+    --docente-primary: #39A900;
     --docente-success: #39A900;
     --docente-warning: #FFA000;
     --docente-danger: #D32F2F;
-    --docente-info: #0288D1;
+    --docente-info: #2D8700;
     --docente-purple: #7B1FA2;
     --docente-teal: #00897B;
     --text-primary: #1a202c;
@@ -183,12 +233,12 @@ body {
 
 /* Welcome Section */
 .welcome-section {
-    background: linear-gradient(135deg, #1976D2 0%, #1565C0 50%, #0D47A1 100%);
+    background: linear-gradient(135deg, #39A900 0%, #2D8700 100%);
     color: white;
     padding: 2.5rem;
     border-radius: 16px;
     margin-bottom: 2rem;
-    box-shadow: 0 10px 30px rgba(25, 118, 210, 0.2);
+    box-shadow: 0 10px 30px rgba(57, 169, 0, 0.2);
     animation: fadeInDown 0.6s ease;
 }
 
@@ -676,7 +726,7 @@ body {
 .btn-primary-custom:hover {
     background: var(--docente-info);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    box-shadow: 0 4px 12px rgba(57, 169, 0, 0.3);
 }
 
 .no-tasks {
@@ -815,11 +865,11 @@ body {
     }
 }
 :root {
-    --simat-primary: #1976D2;
+    --simat-primary: #39A900;
     --simat-success: #39A900;
     --simat-warning: #FFA000;
     --simat-danger: #D32F2F;
-    --simat-info: #0288D1;
+    --simat-info: #2D8700;
     --simat-pending: #FF9800;
     --text-primary: #1a202c;
     --text-secondary: #4a5568;
@@ -828,12 +878,12 @@ body {
 }
 
 .header-section-simat {
-    background: linear-gradient(135deg, var(--simat-primary) 0%, var(--simat-info) 100%);
+    background: linear-gradient(135deg, #39A900 0%, #2D8700 100%);
     color: white;
     padding: 2rem;
     border-radius: 12px;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+    box-shadow: 0 4px 12px rgba(57, 169, 0, 0.2);
 }
 
 .breadcrumb-simat {
@@ -938,7 +988,7 @@ body {
 .form-select-simat:focus {
     outline: none;
     border-color: var(--simat-primary);
-    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    box-shadow: 0 0 0 3px rgba(57, 169, 0, 0.1);
 }
 
 .form-hint-simat {
@@ -978,7 +1028,7 @@ body {
 
 .file-input-simat:focus + .file-label-simat {
     border-color: var(--simat-primary);
-    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    box-shadow: 0 0 0 3px rgba(57, 169, 0, 0.1);
 }
 
 .btn-submit-simat {
@@ -1000,7 +1050,7 @@ body {
 
 .btn-submit-simat:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(25, 118, 210, 0.3);
+    box-shadow: 0 8px 20px rgba(57, 169, 0, 0.3);
 }
 
 .table-responsive-simat {
@@ -1040,13 +1090,13 @@ body {
 }
 
 .badge-colegio {
-    background: #E3F2FD;
+    background: #E8F5E9;
     color: var(--simat-primary);
 }
 
 .badge-grupo {
-    background: #F3E5F5;
-    color: #7B1FA2;
+    background: #E8F5E9;
+    color: var(--docente-success);
 }
 
 .badge-pendiente {
@@ -1099,7 +1149,7 @@ body {
 }
 
 .info-box-simat {
-    background: linear-gradient(135deg, #E3F2FD 0%, #F3E5F5 100%);
+    background: linear-gradient(135deg, #E8F5E9 0%, #F3E5F5 100%);
     padding: 1.5rem;
     border-radius: 12px;
     border-left: 4px solid var(--simat-primary);
@@ -1133,4 +1183,218 @@ body {
 .text-muted-simat {
     color: var(--text-secondary);
     font-style: italic;
+}
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet y móvil grande */
+@media (max-width: 1024px) {
+    .docente-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1001;
+    }
+
+    .docente-sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+    }
+
+    .docente-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .mobile-menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .docente-main {
+        padding: 1.5rem 1rem;
+    }
+
+    .docente-topbar {
+        padding: 1rem 1rem !important;
+    }
+
+    .docente-topbar h1 {
+        font-size: 1.25rem !important;
+    }
+
+    /* Stats grid responsive */
+    .stats-grid-simat {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .stat-card-simat {
+        padding: 1.25rem;
+    }
+
+    .stat-icon-simat {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .stat-value-simat {
+        font-size: 1.75rem;
+    }
+
+    /* Header section responsive */
+    .header-section-simat {
+        padding: 2rem 1.5rem;
+    }
+
+    .header-title-simat {
+        font-size: 1.5rem;
+    }
+
+    .header-subtitle-simat {
+        font-size: 1rem;
+    }
+
+    .header-icon-simat {
+        font-size: 3rem;
+    }
+
+    /* Card responsive */
+    .card-header-simat {
+        padding: 1.25rem 1rem;
+    }
+
+    .card-body-simat {
+        padding: 1.25rem 1rem;
+    }
+
+    /* Table responsive */
+    .table-container-simat {
+        overflow-x: auto;
+    }
+}
+
+/* Móvil pequeño */
+@media (max-width: 640px) {
+    .docente-sidebar {
+        width: 280px;
+        max-width: 85vw;
+    }
+
+    .docente-main {
+        padding: 1rem 0.75rem;
+    }
+
+    .docente-topbar {
+        padding: 0.75rem 0.75rem !important;
+    }
+
+    .docente-topbar h1 {
+        font-size: 1.1rem !important;
+    }
+
+    /* Stats grid para móvil */
+    .stats-grid-simat {
+        grid-template-columns: 1fr;
+    }
+
+    /* Header section móvil */
+    .header-section-simat {
+        padding: 1.5rem 1rem;
+    }
+
+    .header-content-simat {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header-icon-simat {
+        font-size: 4rem;
+        margin-top: 1rem;
+    }
+
+    .header-title-simat {
+        font-size: 1.5rem;
+    }
+
+    .header-subtitle-simat {
+        font-size: 0.9rem;
+    }
+
+    /* Card móvil */
+    .card-header-simat {
+        padding: 1rem 0.75rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .card-body-simat {
+        padding: 1rem 0.75rem;
+    }
+
+    .card-title-simat {
+        font-size: 1.1rem;
+    }
+
+    /* Filtros móvil */
+    .filter-row-simat {
+        flex-direction: column;
+    }
+
+    .filter-group-simat {
+        flex-direction: column;
+    }
+
+    /* Badges y botones móvil */
+    .badge-tipo,
+    .badge-estado,
+    .badge-colegio,
+    .badge-grupo {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    /* Stat card móvil */
+    .stat-card-simat {
+        padding: 1rem;
+    }
+
+    .stat-icon-simat {
+        width: 45px;
+        height: 45px;
+        font-size: 1.25rem;
+    }
+
+    .stat-value-simat {
+        font-size: 1.5rem;
+    }
+
+    .stat-label-simat {
+        font-size: 0.8rem;
+    }
+
+    /* Info box móvil */
+    .info-box-simat {
+        flex-direction: column;
+        padding: 1rem;
+    }
+}
+
+/* Ajuste para pantallas muy pequeñas */
+@media (max-width: 375px) {
+    .docente-sidebar {
+        width: 100%;
+        max-width: 100vw;
+    }
+
+    .header-title-simat {
+        font-size: 1.25rem;
+    }
+
+    .stat-value-simat {
+        font-size: 1.25rem;
+    }
 }

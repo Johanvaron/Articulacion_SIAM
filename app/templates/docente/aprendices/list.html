@@ -244,11 +244,13 @@ function exportarExcel() {
 
 <style>
 :root {
-    --primary-color: #1976D2;
+    --primary-color: #39A900;
+    --primary-dark: #2D8700;
+    --primary-darker: #1F5C00;
     --success-color: #39A900;
     --warning-color: #FFA000;
     --danger-color: #D32F2F;
-    --info-color: #0288D1;
+    --info-color: #39A900;
     --text-dark: #1a202c;
     --text-gray: #4a5568;
     --text-light: #718096;
@@ -258,21 +260,36 @@ function exportarExcel() {
 
 /* Header Section */
 .header-section-apren {
-    background: linear-gradient(135deg, #1976D2 0%, #1565C0 50%, #0D47A1 100%);
+    background: linear-gradient(135deg, #39A900 0%, #2D8700 100%);
     color: white;
-    padding: 2rem;
+    padding: 2.5rem 2rem;
     border-radius: 16px;
     margin-bottom: 2rem;
-    box-shadow: 0 8px 24px rgba(25, 118, 210, 0.2);
+    box-shadow: 0 10px 30px rgba(57, 169, 0, 0.2);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-section-apren::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50px;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
 }
 
 .header-content-apren {
     flex: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .breadcrumb-apren {
@@ -322,6 +339,8 @@ function exportarExcel() {
 .header-actions-apren {
     display: flex;
     gap: 1rem;
+    position: relative;
+    z-index: 1;
 }
 
 .btn-action-apren {
@@ -337,13 +356,13 @@ function exportarExcel() {
 }
 
 .btn-success-apren {
-    background: var(--success-color);
+    background: #39A900;
     color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: none;
 }
 
 .btn-success-apren:hover {
-    background: #2d8a00;
+    background: #2D8700;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(57, 169, 0, 0.3);
 }
@@ -358,25 +377,14 @@ function exportarExcel() {
 
 .stat-card-apren {
     background: white;
-    padding: 1.5rem;
+    padding: 1.75rem;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
-    gap: 1rem;
-    position: relative;
-    overflow: hidden;
+    gap: 1.25rem;
+    border-left: 4px solid var(--stat-color);
     transition: all 0.3s ease;
-}
-
-.stat-card-apren::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--stat-color);
 }
 
 .stat-card-apren:hover {
@@ -384,10 +392,10 @@ function exportarExcel() {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-.stat-primary-apren { --stat-color: var(--primary-color); }
-.stat-success-apren { --stat-color: var(--success-color); }
-.stat-warning-apren { --stat-color: var(--warning-color); }
-.stat-info-apren { --stat-color: var(--info-color); }
+.stat-primary-apren { --stat-color: #39A900; --stat-gradient: linear-gradient(135deg, #39A900 0%, #2D8700 100%); }
+.stat-success-apren { --stat-color: #39A900; --stat-gradient: linear-gradient(135deg, #39A900 0%, #2D8700 100%); }
+.stat-warning-apren { --stat-color: #FFA000; --stat-gradient: linear-gradient(135deg, #FFA000 0%, #FF8C00 100%); }
+.stat-info-apren { --stat-color: #1976D2; --stat-gradient: linear-gradient(135deg, #1976D2 0%, #1565C0 100%); }
 
 .stat-icon-wrapper-apren {
     flex-shrink: 0;
@@ -397,12 +405,13 @@ function exportarExcel() {
     width: 60px;
     height: 60px;
     border-radius: 12px;
+    background: var(--stat-gradient);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    color: white;
-    background: var(--stat-color);
+    font-size: 1.75rem;
+    flex-shrink: 0;
 }
 
 .stat-content-apren {
@@ -488,7 +497,7 @@ function exportarExcel() {
 .filter-select-apren:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    box-shadow: 0 0 0 3px rgba(57, 169, 0, 0.1);
 }
 
 .filter-actions-apren {
@@ -512,13 +521,14 @@ function exportarExcel() {
 }
 
 .btn-filter-primary-apren {
-    background: var(--primary-color);
+    background: #39A900;
     color: white;
 }
 
 .btn-filter-primary-apren:hover {
-    background: #1565C0;
+    background: #2D8700;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(57, 169, 0, 0.3);
 }
 
 .btn-filter-secondary-apren {
@@ -531,13 +541,14 @@ function exportarExcel() {
 }
 
 .btn-filter-success-apren {
-    background: var(--success-color);
+    background: #39A900;
     color: white;
 }
 
 .btn-filter-success-apren:hover {
-    background: #2d8a00;
+    background: #2D8700;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(57, 169, 0, 0.3);
 }
 
 /* Table Card */
@@ -550,7 +561,7 @@ function exportarExcel() {
 
 .table-header-apren {
     padding: 1.5rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+    background: linear-gradient(135deg, #39A900 0%, #2D8700 100%);
     color: white;
     display: flex;
     justify-content: space-between;
@@ -636,7 +647,7 @@ function exportarExcel() {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+    background: linear-gradient(135deg, #39A900, #2D8700);
     color: white;
     display: flex;
     align-items: center;
@@ -658,8 +669,8 @@ function exportarExcel() {
 .group-badge-apren {
     display: inline-block;
     padding: 0.375rem 0.75rem;
-    background: rgba(2, 136, 209, 0.1);
-    color: var(--info-color);
+    background: rgba(57, 169, 0, 0.1);
+    color: #39A900;
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 600;
@@ -680,7 +691,7 @@ function exportarExcel() {
 }
 
 .program-cell-apren i {
-    color: var(--primary-color);
+    color: #39A900;
     font-size: 1rem;
 }
 
@@ -700,9 +711,9 @@ function exportarExcel() {
 }
 
 .status-borrador-apren { background: #e2e8f0; color: #4a5568; }
-.status-enviado-apren { background: #bee3f8; color: #2c5282; }
+.status-enviado-apren { background: #c8e6c9; color: #1B5E20; }
 .status-pendiente-apren { background: #feebc8; color: #7c2d12; }
-.status-completo-apren, .status-prematricula-apren { background: #c6f6d5; color: #22543d; }
+.status-completo-apren, .status-prematricula-apren { background: #c8e6c9; color: #1B5E20; }
 .status-none-apren { background: #f7fafc; color: #718096; }
 
 .action-buttons-apren {
@@ -722,23 +733,25 @@ function exportarExcel() {
 }
 
 .btn-view-apren {
-    background: var(--info-color);
+    background: #39A900;
     color: white;
 }
 
 .btn-view-apren:hover {
-    background: #0277BD;
+    background: #2D8700;
     transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(57, 169, 0, 0.3);
 }
 
 .btn-matricula-apren {
-    background: var(--primary-color);
+    background: #2D8700;
     color: white;
 }
 
 .btn-matricula-apren:hover {
-    background: #1565C0;
+    background: #1F5C00;
     transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(45, 135, 0, 0.3);
 }
 
 /* Empty State */
