@@ -4,41 +4,33 @@
 
 {% block content %}
 
-<!-- Header Section with Modern Design -->
-<div class="relative bg-gradient-to-br from-sena-green via-sena-green-dark to-sena-green-darker rounded-3xl shadow-2xl p-8 mb-8 overflow-hidden">
-    <!-- Decorative Elements -->
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-    </div>
+<!-- Header Section - Estilo limpio y profesional -->
+<div class="bg-sena-green rounded-2xl shadow-lg p-8 mb-8">
+    <!-- Breadcrumb -->
+    <nav class="text-white/80 text-sm mb-4 flex items-center">
+        <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
+            <i class="fas fa-home mr-1"></i> Dashboard
+        </a>
+        <span class="mx-2">/</span>
+        <a href="{{ url_for('admin.colegios') }}" class="hover:text-white transition-colors">
+            Colegios
+        </a>
+        <span class="mx-2">/</span>
+        <span class="text-white font-semibold">{{ 'Editar' if colegio else 'Nuevo' }}</span>
+    </nav>
     
-    <div class="relative z-10">
-        <!-- Breadcrumb -->
-        <nav class="text-white/80 text-sm mb-4 flex items-center">
-            <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
-                <i class="fas fa-home mr-1"></i> Inicio
-            </a>
-            <span class="mx-2">/</span>
-            <a href="{{ url_for('admin.colegios') }}" class="hover:text-white transition-colors">
-                Colegios
-            </a>
-            <span class="mx-2">/</span>
-            <span class="text-white font-semibold">{{ 'Editar' if colegio else 'Nuevo' }}</span>
-        </nav>
-        
-        <!-- Title -->
-        <h1 class="text-4xl font-extrabold text-white mb-2 flex items-center">
-            <i class="fas fa-{% if colegio %}edit{% else %}school{% endif %} mr-3"></i>
-            {{ 'Editar Colegio' if colegio else 'Nuevo Colegio' }}
-        </h1>
-        <p class="text-xl text-white/90">
-            {% if colegio %}
-            Modifique la información del colegio en el sistema
-            {% else %}
-            Complete el formulario para agregar un nuevo colegio
-            {% endif %}
-        </p>
-    </div>
+    <!-- Título -->
+    <h1 class="text-4xl font-bold text-white mb-2 flex items-center">
+        <i class="fas fa-{% if colegio %}edit{% else %}school{% endif %} mr-3"></i>
+        {{ 'Editar Colegio' if colegio else 'Nuevo Colegio' }}
+    </h1>
+    <p class="text-lg text-white">
+        {% if colegio %}
+        Modifique la información del colegio en el sistema
+        {% else %}
+        Complete el formulario para agregar un nuevo colegio
+        {% endif %}
+    </p>
 </div>
 
 <!-- Form Container -->

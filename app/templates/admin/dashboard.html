@@ -6,21 +6,15 @@
 
 {% block content %}
 
-<!-- Welcome Section with Modern Design -->
-<div class="relative bg-gradient-to-br from-sena-green via-sena-green-dark to-sena-green-darker rounded-3xl shadow-2xl p-8 mb-8 overflow-hidden">
-    <!-- Decorative Elements -->
-    <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-    </div>
-    
-    <div class="relative z-10 flex items-center justify-between">
+<!-- Welcome Section - Estilo limpio y profesional -->
+<div class="bg-sena-green rounded-2xl shadow-lg p-8 mb-8">
+    <div class="flex items-center justify-between">
         <div class="flex-1">
-            <h1 class="text-4xl font-extrabold text-white mb-2">Panel de Administración</h1>
-            <p class="text-xl text-white/90">Bienvenido, <span class="font-bold">{{ current_user.nombre_completo }}</span> - Gestión del Sistema de Articulación SENA</p>
+            <h1 class="text-4xl font-bold text-white mb-2">Panel de Administración</h1>
+            <p class="text-lg text-white">Bienvenido, <span class="font-bold">{{ current_user.nombre_completo }}</span> - Gestión del Sistema de Articulación SENA</p>
         </div>
-        <div class="hidden md:flex items-center justify-center w-24 h-24 bg-white/20 backdrop-blur-md rounded-2xl shadow-lg">
-            <i class="fas fa-user-shield text-5xl text-white"></i>
+        <div class="hidden md:flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-xl">
+            <i class="fas fa-user-shield text-4xl text-white"></i>
         </div>
     </div>
 </div>

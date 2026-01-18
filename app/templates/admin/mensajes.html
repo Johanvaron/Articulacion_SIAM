@@ -3,78 +3,74 @@
 {% block title %}Mensajes de Contacto - Admin{% endblock %}
 
 {% block content %}
-<!-- Modern Messages Header -->
-<div class="messages-header">
-    <div class="header-content-msg">
-        <div class="header-text-msg">
-            <h1 class="header-title-msg">Mensajes de Contacto</h1>
-            <p class="header-subtitle-msg">Gestiona los mensajes recibidos desde el formulario de contacto del sitio web</p>
-        </div>
-        <div class="header-icon-msg">
-            <i class="fas fa-envelope"></i>
-        </div>
-    </div>
+<!-- Header Section - Estilo limpio y profesional -->
+<div class="bg-sena-green rounded-2xl shadow-lg p-8 mb-8">
+    <!-- Breadcrumb -->
+    <nav class="text-white/80 text-sm mb-4 flex items-center">
+        <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
+            <i class="fas fa-home mr-1"></i> Dashboard
+        </a>
+        <span class="mx-2">/</span>
+        <span class="text-white font-semibold">Mensajes</span>
+    </nav>
+    
+    <!-- Título -->
+    <h1 class="text-4xl font-bold text-white mb-2 flex items-center">
+        <i class="fas fa-envelope mr-3"></i>
+        Mensajes de Contacto
+    </h1>
+    <p class="text-lg text-white">
+        Gestiona los mensajes recibidos desde el formulario de contacto del sitio web
+    </p>
 </div>
 
 <!-- Stats Cards -->
-<div class="stats-grid-msg">
-    <div class="stat-card-msg stat-total-msg">
-        <div class="stat-icon-wrapper-msg">
-            <div class="stat-icon-msg">
-                <i class="fas fa-envelope"></i>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-semibold text-gray-500 uppercase">Total Mensajes</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ mensajes|length }}</p>
             </div>
-        </div>
-        <div class="stat-content-msg">
-            <div class="stat-value-msg">{{ mensajes|length }}</div>
-            <div class="stat-label-msg">Total Mensajes</div>
-        </div>
-        <div class="stat-trend-msg">
-            <i class="fas fa-list"></i>
+            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-envelope text-white text-2xl"></i>
+            </div>
         </div>
     </div>
 
-    <div class="stat-card-msg stat-unread-msg">
-        <div class="stat-icon-wrapper-msg">
-            <div class="stat-icon-msg">
-                <i class="fas fa-envelope"></i>
+    <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-orange-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-semibold text-gray-500 uppercase">No Leídos</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ mensajes|selectattr('leido', 'equalto', False)|list|length }}</p>
             </div>
-        </div>
-        <div class="stat-content-msg">
-            <div class="stat-value-msg">{{ mensajes|selectattr('leido', 'equalto', False)|list|length }}</div>
-            <div class="stat-label-msg">No Leídos</div>
-        </div>
-        <div class="stat-trend-msg">
-            <i class="fas fa-exclamation-circle"></i>
+            <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-envelope text-white text-2xl"></i>
+            </div>
         </div>
     </div>
 
-    <div class="stat-card-msg stat-read-msg">
-        <div class="stat-icon-wrapper-msg">
-            <div class="stat-icon-msg">
-                <i class="fas fa-envelope-open"></i>
+    <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-green-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-semibold text-gray-500 uppercase">Leídos</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ mensajes|selectattr('leido', 'equalto', True)|list|length }}</p>
             </div>
-        </div>
-        <div class="stat-content-msg">
-            <div class="stat-value-msg">{{ mensajes|selectattr('leido', 'equalto', True)|list|length }}</div>
-            <div class="stat-label-msg">Leídos</div>
-        </div>
-        <div class="stat-trend-msg">
-            <i class="fas fa-check"></i>
+            <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-envelope-open text-white text-2xl"></i>
+            </div>
         </div>
     </div>
 
-    <div class="stat-card-msg stat-replied-msg">
-        <div class="stat-icon-wrapper-msg">
-            <div class="stat-icon-msg">
-                <i class="fas fa-reply"></i>
+    <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-purple-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-semibold text-gray-500 uppercase">Respondidos</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ mensajes|selectattr('respondido', 'equalto', True)|list|length }}</p>
             </div>
-        </div>
-        <div class="stat-content-msg">
-            <div class="stat-value-msg">{{ mensajes|selectattr('respondido', 'equalto', True)|list|length }}</div>
-            <div class="stat-label-msg">Respondidos</div>
-        </div>
-        <div class="stat-trend-msg">
-            <i class="fas fa-check-double"></i>
+            <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-reply text-white text-2xl"></i>
+            </div>
         </div>
     </div>
 </div>

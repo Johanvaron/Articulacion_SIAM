@@ -4,40 +4,35 @@
 
 {% block content %}
 
-<!-- Header Section with Modern Design -->
-<div class="relative bg-gradient-to-br from-sena-green via-sena-green-dark to-sena-green-darker rounded-3xl shadow-2xl p-8 mb-8 overflow-hidden">
-    <!-- Decorative Elements -->
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-    </div>
-    
-    <div class="relative z-10">
-        <!-- Breadcrumb -->
-        <nav class="text-white/80 text-sm mb-4 flex items-center">
-            <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
-                <i class="fas fa-home mr-1"></i> Dashboard
-            </a>
-            <span class="mx-2">/</span>
-            <span class="text-white font-semibold">Colegios</span>
-        </nav>
-        
-        <!-- Title and Action Button -->
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-4xl font-extrabold text-white mb-2 flex items-center">
-                    <i class="fas fa-school mr-3"></i>
-                    Gestión de Colegios
-                </h1>
-                <p class="text-xl text-white/90">
-                    Administre las instituciones educativas del sistema
-                </p>
-            </div>
-            <a href="{{ url_for('admin.crear_colegio') }}" class="inline-flex items-center px-6 py-3 bg-white text-sena-green font-bold rounded-xl hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                <i class="fas fa-plus mr-2"></i>
-                Nuevo Colegio
-            </a>
+<!-- Header Section - Estilo limpio y profesional -->
+<div class="bg-sena-green rounded-2xl shadow-lg p-8 mb-8">
+    <div class="flex items-center justify-between">
+        <!-- Breadcrumb y Título -->
+        <div>
+            <!-- Breadcrumb -->
+            <nav class="text-white/80 text-sm mb-4 flex items-center">
+                <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
+                    <i class="fas fa-home mr-1"></i> Dashboard
+                </a>
+                <span class="mx-2">/</span>
+                <span class="text-white font-semibold">Colegios</span>
+            </nav>
+            
+            <!-- Título e Ícono -->
+            <h1 class="text-4xl font-bold text-white mb-2 flex items-center">
+                <i class="fas fa-school mr-3"></i>
+                Gestión de Colegios
+            </h1>
+            <p class="text-lg text-white">
+                Administre las instituciones educativas del sistema
+            </p>
         </div>
+        
+        <!-- Botón de Acción -->
+        <a href="{{ url_for('admin.crear_colegio') }}" class="inline-flex items-center px-6 py-3 bg-white text-sena-green font-bold rounded-lg hover:bg-white/95 transition-all duration-200 shadow-md hover:shadow-lg">
+            <i class="fas fa-plus mr-2"></i>
+            Nuevo Colegio
+        </a>
     </div>
 </div>
 

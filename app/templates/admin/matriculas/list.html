@@ -4,26 +4,25 @@
 
 {% block content %}
 
-<!-- Header con gradiente SENA -->
-<div class="bg-gradient-to-r from-sena-green to-sena-green-dark text-white rounded-2xl shadow-lg p-8 mb-8">
-    <div class="flex items-center justify-between flex-wrap gap-4">
-        <div>
-            <nav class="flex items-center gap-2 text-sm mb-3 text-white/90">
-                <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors">
-                    <i class="fas fa-home"></i> Inicio
-                </a>
-                <span>/</span>
-                <span class="font-semibold text-white">Matrículas</span>
-            </nav>
-            <h1 class="text-3xl font-bold flex items-center gap-3 mb-2">
-                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                    <i class="fas fa-clipboard-list"></i>
-                </div>
-                Gestión de Matrículas
-            </h1>
-            <p class="text-white/95 text-lg">Administre y supervise todas las matrículas del sistema</p>
-        </div>
-    </div>
+<!-- Header Section - Estilo limpio y profesional -->
+<div class="bg-sena-green rounded-2xl shadow-lg p-8 mb-8">
+    <!-- Breadcrumb -->
+    <nav class="text-white/80 text-sm mb-4 flex items-center">
+        <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
+            <i class="fas fa-home mr-1"></i> Dashboard
+        </a>
+        <span class="mx-2">/</span>
+        <span class="text-white font-semibold">Matrículas</span>
+    </nav>
+    
+    <!-- Título -->
+    <h1 class="text-4xl font-bold text-white mb-2 flex items-center">
+        <i class="fas fa-clipboard-list mr-3"></i>
+        Gestión de Matrículas
+    </h1>
+    <p class="text-lg text-white">
+        Administre y supervise todas las matrículas del sistema
+    </p>
 </div>
 
 <!-- Stats Cards -->

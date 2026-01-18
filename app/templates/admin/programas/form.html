@@ -4,41 +4,33 @@
 
 {% block content %}
 
-<!-- Header Section with Modern Design -->
-<div class="relative bg-gradient-to-br from-sena-green via-sena-green-dark to-sena-green-darker rounded-3xl shadow-2xl p-8 mb-8 overflow-hidden">
-    <!-- Decorative Elements -->
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-    </div>
+<!-- Header Section - Estilo limpio y profesional -->
+<div class="bg-sena-green rounded-2xl shadow-lg p-8 mb-8">
+    <!-- Breadcrumb -->
+    <nav class="text-white/80 text-sm mb-4 flex items-center">
+        <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
+            <i class="fas fa-home mr-1"></i> Dashboard
+        </a>
+        <span class="mx-2">/</span>
+        <a href="{{ url_for('admin.programas') }}" class="hover:text-white transition-colors">
+            Programas
+        </a>
+        <span class="mx-2">/</span>
+        <span class="text-white font-semibold">{{ 'Editar' if programa else 'Nuevo' }}</span>
+    </nav>
     
-    <div class="relative z-10">
-        <!-- Breadcrumb -->
-        <nav class="text-white/80 text-sm mb-4 flex items-center">
-            <a href="{{ url_for('admin.dashboard') }}" class="hover:text-white transition-colors flex items-center">
-                <i class="fas fa-home mr-1"></i> Inicio
-            </a>
-            <span class="mx-2">/</span>
-            <a href="{{ url_for('admin.programas') }}" class="hover:text-white transition-colors">
-                Programas
-            </a>
-            <span class="mx-2">/</span>
-            <span class="text-white font-semibold">{{ 'Editar' if programa else 'Nuevo' }}</span>
-        </nav>
-        
-        <!-- Title -->
-        <h1 class="text-4xl font-extrabold text-white mb-2 flex items-center">
-            <i class="fas fa-{% if programa %}edit{% else %}graduation-cap{% endif %} mr-3"></i>
-            {{ 'Editar Programa' if programa else 'Nuevo Programa' }}
-        </h1>
-        <p class="text-xl text-white/90">
-            {% if programa %}
-            Modifique la información del programa técnico
-            {% else %}
-            Complete el formulario para agregar un nuevo programa
-            {% endif %}
-        </p>
-    </div>
+    <!-- Título -->
+    <h1 class="text-4xl font-bold text-white mb-2 flex items-center">
+        <i class="fas fa-{% if programa %}edit{% else %}graduation-cap{% endif %} mr-3"></i>
+        {{ 'Editar Programa' if programa else 'Nuevo Programa' }}
+    </h1>
+    <p class="text-lg text-white">
+        {% if programa %}
+        Modifique la información del programa técnico
+        {% else %}
+        Complete el formulario para agregar un nuevo programa
+        {% endif %}
+    </p>
 </div>
 
 <!-- Formulario Principal - Aprovechando todo el ancho -->
